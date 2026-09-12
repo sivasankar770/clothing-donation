@@ -1,474 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Clothing Redistribution Platform</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClothShare AI - Smart Donation Platform</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .active-tab {
+            border-bottom: 3px solid #3b82f6;
+            color: #1d4ed8;
+            font-weight: 600;
+        }
+    </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-emerald-500 selection:text-white">
+<body class="bg-slate-50 min-h-screen text-slate-800 font-sans flex flex-col">
 
-  <!-- Top Navbar -->
-  <header class="bg-slate-900/80 backdrop-blur border-b border-slate-800 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black text-xl shadow-lg shadow-emerald-500/20">
-          <i class="fa-solid fa-shirt"></i>
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-blue-600 rounded-lg text-white">
+                    <i data-lucide="shirt" class="w-6 h-6"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-xl text-slate-900 tracking-tight">ClothShare AI</h1>
+                    <p class="text-xs text-slate-500">Smart Redistribution Platform</p>
+                </div>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <nav class="flex space-x-6 h-full">
+                <button onclick="switchTab('donor')" id="tab-donor" class="h-full px-2 flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition active-tab">
+                    <i data-lucide="package-plus" class="w-4 h-4"></i>
+                    <span>Donor Portal</span>
+                </button>
+                <button onclick="switchTab('ngo')" id="tab-ngo" class="h-full px-2 flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition">
+                    <i data-lucide="building-2" class="w-4 h-4"></i>
+                    <span>NGO Requirements</span>
+                </button>
+                <button onclick="switchTab('admin')" id="tab-admin" class="h-full px-2 flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition">
+                    <i data-lucide="shield-check" class="w-4 h-4"></i>
+                    <span>Admin Audit Log</span>
+                </button>
+            </nav>
         </div>
-        <div>
-          <h1 class="text-lg font-bold bg-gradient-to-r from-emerald-400 to-teal-200 bg-clip-text text-transparent">ClothShare AI</h1>
-          <p class="text-[11px] text-slate-400">Smart Garment Redistribution Engine</p>
-        </div>
-      </div>
+    </header>
 
-      <!-- Navigation Tabs -->
-      <nav class="flex gap-1.5 bg-slate-950 p-1.5 rounded-xl border border-slate-800">
-        <button onclick="switchTab('donor')" id="tab-donor" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all bg-emerald-600 text-white shadow-md shadow-emerald-600/30 flex items-center gap-2">
-          <i class="fa-solid fa-hand-holding-heart"></i> Donor Portal
-        </button>
-        <button onclick="switchTab('ngo')" id="tab-ngo" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2">
-          <i class="fa-solid fa-building-ngo"></i> NGO Requirements
-        </button>
-        <button onclick="switchTab('admin')" id="tab-admin" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-2">
-          <i class="fa-solid fa-chart-line"></i> Admin Dashboard
-        </button>
-      </nav>
-    </div>
-  </header>
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
 
-  <main class="max-w-7xl mx-auto p-4 md:p-8">
+        <!-- 1. DONOR PORTAL TAB -->
+        <section id="view-donor" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Donation Input Form -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-fit">
+                    <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i data-lucide="plus-circle" class="w-5 h-5 text-blue-600"></i> Donate Clothes
+                    </h2>
+                    <form id="donation-form" onsubmit="handleDonationSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Donor Name / Org</label>
+                            <input type="text" id="donor-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Clothing Type</label>
+                                <select id="donor-type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    <option value="Jackets">Jackets / Winter</option>
+                                    <option value="Shirts">Shirts / Tops</option>
+                                    <option value="Pants">Pants / Trousers</option>
+                                    <option value="Kids Wear">Kids Wear</option>
+                                    <option value="Blankets">Blankets</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Size</label>
+                                <select id="donor-size" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    <option value="S">Small (S)</option>
+                                    <option value="M" selected>Medium (M)</option>
+                                    <option value="L">Large (L)</option>
+                                    <option value="XL">Extra Large (XL)</option>
+                                    <option value="Kids">Kids Standard</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Quantity</label>
+                                <input type="number" id="donor-qty" min="1" value="10" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Condition</label>
+                                <select id="donor-condition" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                    <option value="New">Brand New</option>
+                                    <option value="Gently Used" selected>Gently Used</option>
+                                    <option value="Used">Used (Good)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Your Location (Lat, Long)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="donor-lat" value="13.0827" placeholder="Lat" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
+                                <input type="text" id="donor-lng" value="80.2707" placeholder="Long" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
+                            </div>
+                            <span class="text-xs text-slate-400 mt-1 block">Default set to Chennai Center</span>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm">
+                            Submit & Match NGO
+                        </button>
+                    </form>
+                </div>
 
-    <!-- ================= 1. DONOR PORTAL ================= -->
-    <section id="view-donor" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      <!-- Donor Entry Form -->
-      <div class="lg:col-span-5 bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl backdrop-blur">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-base font-bold text-emerald-400 flex items-center gap-2">
-            <i class="fa-solid fa-box-archive"></i> Donate Garment
-          </h2>
-          <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20 font-semibold">Step 1 of 2</span>
-        </div>
+                <!-- Matches Panel -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i> AI Priority Recommendations
+                        </h2>
+                        <span class="text-xs bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full font-medium">Utility Score Weighted</span>
+                    </div>
 
-        <form id="donationForm" class="space-y-4">
-          <div>
-            <label class="block text-xs text-slate-400 mb-1">Donor Full Name</label>
-            <input type="text" id="donorId" value="Donor Siva" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none transition-all">
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Garment Type</label>
-              <select id="subCategory" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none">
-                <option value="Winter Coat">Winter Coat</option>
-                <option value="Sweater">Sweater</option>
-                <option value="Shirt">Shirt</option>
-                <option value="Blanket">Blanket</option>
-              </select>
+                    <div id="matches-list" class="space-y-4">
+                        <!-- Dynamic Match Cards Rendered Here -->
+                    </div>
+                </div>
             </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Size</label>
-              <select id="size" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none">
-                <option value="S">Small (S)</option>
-                <option value="M">Medium (M)</option>
-                <option value="L" selected>Large (L)</option>
-                <option value="XL">Extra Large (XL)</option>
-              </select>
+        </section>
+
+        <!-- 2. NGO REQUIREMENTS TAB -->
+        <section id="view-ngo" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
+                <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i data-lucide="building-2" class="w-5 h-5 text-blue-600"></i> Post Shelter Requirement
+                </h2>
+                <form id="ngo-form" onsubmit="handleNgoSubmit(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Organization / Shelter Name</label>
+                        <input type="text" id="ngo-name" required placeholder="e.g. Hope Children's Home" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Item Required</label>
+                            <select id="ngo-type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                <option value="Jackets">Jackets / Winter</option>
+                                <option value="Shirts">Shirts / Tops</option>
+                                <option value="Pants">Pants / Trousers</option>
+                                <option value="Kids Wear">Kids Wear</option>
+                                <option value="Blankets">Blankets</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Required Size</label>
+                            <select id="ngo-size" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                <option value="S">Small (S)</option>
+                                <option value="M">Medium (M)</option>
+                                <option value="L">Large (L)</option>
+                                <option value="XL">Extra Large (XL)</option>
+                                <option value="Kids">Kids Standard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Quantity Needed</label>
+                            <input type="number" id="ngo-qty" min="1" value="25" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Urgency Level</label>
+                            <select id="ngo-urgency" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                                <option value="Critical">Critical (Disaster/Emergency)</option>
+                                <option value="High">High (Immediate Need)</option>
+                                <option value="Medium" selected>Medium (Standard Stock)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Shelter Coordinates (Lat, Long)</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="ngo-lat" value="13.0405" placeholder="Lat" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
+                            <input type="text" id="ngo-lng" value="80.2337" placeholder="Long" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm">
+                        Post Requirement
+                    </button>
+                </form>
             </div>
-          </div>
+        </section>
 
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Target Group</label>
-              <select id="genderAge" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none">
-                <option value="Adult Male" selected>Adult Male</option>
-                <option value="Adult Female">Adult Female</option>
-                <option value="Child">Child</option>
-              </select>
+        <!-- 3. ADMIN AUDIT LOG TAB -->
+        <section id="view-admin" class="space-y-6 hidden">
+            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="history" class="w-5 h-5 text-blue-600"></i> Real-time Audit & Match History Log
+                    </h2>
+                    <span class="text-xs text-slate-500">Immutable Ledger Mock</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm text-slate-600">
+                        <thead class="bg-slate-100 text-slate-800 uppercase text-xs font-semibold">
+                            <tr>
+                                <th class="p-3">Timestamp</th>
+                                <th class="p-3">Event Type</th>
+                                <th class="p-3">Details</th>
+                                <th class="p-3">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-table-body" class="divide-y divide-slate-200">
+                            <!-- Dynamic Audit Logs Rendered Here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Condition Grade</label>
-              <select id="condition" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200 focus:border-emerald-500 focus:outline-none">
-                <option value="Grade A">Grade A (Like New)</option>
-                <option value="Grade B" selected>Grade B (Gently Used)</option>
-                <option value="Grade C">Grade C (Worn/Torn - Auto Recycle)</option>
-              </select>
-            </div>
-          </div>
+        </section>
 
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Latitude</label>
-              <input type="number" step="any" id="lat" value="11.353" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200">
-            </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Longitude</label>
-              <input type="number" step="any" id="lng" value="76.795" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200">
-            </div>
-          </div>
+    </main>
 
-          <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 font-bold py-3 rounded-lg text-xs transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Calculate & Match Recipient
-          </button>
-        </form>
-      </div>
+    <!-- Embedded Application JavaScript Logic -->
+    <script>
+        // Pre-populated NGO Needs Data
+        let ngoNeeds = [
+            { id: 'NGO-101', name: "Adayar Relief Shelter", type: "Jackets", size: "M", qty: 30, urgency: "Critical", lat: 13.0012, lng: 80.2565 },
+            { id: 'NGO-102', name: "City Orphanage Home", type: "Kids Wear", size: "Kids", qty: 50, urgency: "High", lat: 13.0878, lng: 80.2785 },
+            { id: 'NGO-103', name: "Grace Old Age Home", type: "Blankets", size: "L", qty: 20, urgency: "Medium", lat: 12.9815, lng: 80.2180 }
+        ];
 
-      <!-- Live Matching Visualizer -->
-      <div class="lg:col-span-7 bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl flex flex-col backdrop-blur">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-base font-bold text-amber-400 flex items-center gap-2">
-            <i class="fa-solid fa-square-poll-vertical"></i> Smart Matching Results
-          </h2>
-          <span class="text-[10px] bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded-full border border-amber-500/20 font-semibold">Step 2 of 2</span>
-        </div>
+        let auditLogs = [
+            { time: new Date().toLocaleTimeString(), type: "SYSTEM_INIT", details: "Matching engine initialized successfully.", status: "SUCCESS" }
+        ];
 
-        <div id="output" class="flex-1 bg-slate-950 border border-slate-800 rounded-xl p-5 overflow-y-auto">
-          <div class="text-center py-12 text-slate-600">
-            <i class="fa-solid fa-circle-nodes text-4xl mb-3 animate-pulse"></i>
-            <p class="text-xs">Submit a garment on the left to trigger real-time recipient allocation engine.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+        // Haversine Distance Formula (km)
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Earth radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
 
-    <!-- ================= 2. NGO ENTRY PORTAL ================= -->
-    <section id="view-ngo" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      <!-- NGO Form -->
-      <div class="lg:col-span-4 bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl">
-        <h2 class="text-base font-bold text-indigo-400 mb-1 flex items-center gap-2">
-          <i class="fa-solid fa-pen-to-square"></i> Post Demand Requirement
-        </h2>
-        <p class="text-xs text-slate-400 mb-4">Add clothing needs for local shelters & welfare trusts.</p>
+        // Utility Weighted Score Calculation
+        function computeUtilityScore(donor, ngo) {
+            let score = 0;
+            
+            // Item & Size Match
+            if (donor.type === ngo.type) score += 40;
+            if (donor.size === ngo.size) score += 20;
 
-        <form id="ngoForm" class="space-y-3">
-          <div>
-            <label class="block text-xs text-slate-400 mb-1">Organization / Shelter Name</label>
-            <input type="text" id="ngoName" required placeholder="e.g. Hope Shelter Trust" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-200">
-          </div>
+            // Distance Penalty (closer is better)
+            const dist = calculateDistance(donor.lat, donor.lng, ngo.lat, ngo.lng);
+            const distScore = Math.max(0, 20 - (dist * 1.5));
+            score += distScore;
 
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Garment Required</label>
-              <select id="ngoCategory" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200">
-                <option value="Winter Coat">Winter Coat</option>
-                <option value="Sweater">Sweater</option>
-                <option value="Shirt">Shirt</option>
-                <option value="Blanket">Blanket</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Size Needed</label>
-              <select id="ngoSize" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200">
-                <option value="S">Small (S)</option>
-                <option value="M">Medium (M)</option>
-                <option value="L">Large (L)</option>
-                <option value="XL">Extra Large (XL)</option>
-              </select>
-            </div>
-          </div>
+            // Urgency Boost
+            if (ngo.urgency === 'Critical') score += 20;
+            else if (ngo.urgency === 'High') score += 10;
+            else score += 5;
 
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Target Demographic</label>
-              <select id="ngoGroup" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200">
-                <option value="Adult Male">Adult Male</option>
-                <option value="Adult Female">Adult Female</option>
-                <option value="Child">Child</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Quantity Needed</label>
-              <input type="number" id="ngoQty" value="15" min="1" required class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200">
-            </div>
-          </div>
+            return { score: Math.round(score), distance: dist.toFixed(1) };
+        }
 
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Urgency Scale (0.1 - 1.0)</label>
-              <input type="number" step="0.1" id="ngoUrgency" value="0.9" min="0.1" max="1.0" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200">
-            </div>
-            <div>
-              <label class="block text-xs text-slate-400 mb-1">Capacity Avail. (0.1 - 1.0)</label>
-              <input type="number" step="0.1" id="ngoCap" value="0.8" min="0.1" max="1.0" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2 text-xs text-slate-200">
-            </div>
-          </div>
+        // Handle Donation Form Submit & Matching
+        function handleDonationSubmit(event) {
+            event.preventDefault();
+            
+            const donor = {
+                name: document.getElementById('donor-name').value,
+                type: document.getElementById('donor-type').value,
+                size: document.getElementById('donor-size').value,
+                qty: parseInt(document.getElementById('donor-qty').value),
+                condition: document.getElementById('donor-condition').value,
+                lat: parseFloat(document.getElementById('donor-lat').value),
+                lng: parseFloat(document.getElementById('donor-lng').value)
+            };
 
-          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 font-bold py-2.5 rounded-lg text-xs transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-plus"></i> Add Demand Manifest
-          </button>
-        </form>
-      </div>
+            logAudit("DONATION_OFFERED", `Donor ${donor.name} offered ${donor.qty}x ${donor.type} (${donor.size})`);
+            renderMatches(donor);
+        }
 
-      <!-- NGO Demand Table -->
-      <div class="lg:col-span-8 bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl">
-        <h2 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-list-check text-indigo-400"></i> Active NGO Demands Registry
-        </h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-300">
-            <thead class="bg-slate-950 uppercase border-b border-slate-800 text-slate-400 font-semibold">
-              <tr>
-                <th class="p-3">Shelter Name</th>
-                <th class="p-3">Required Garment</th>
-                <th class="p-3">Size & Group</th>
-                <th class="p-3">Qty</th>
-                <th class="p-3">Urgency Score</th>
-                <th class="p-3">Storage Space</th>
-              </tr>
-            </thead>
-            <tbody id="ngoDemandTable" class="divide-y divide-slate-800">
-              <!-- Dynamically populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+        // Render AI Recommended Matches
+        function renderMatches(donor) {
+            const container = document.getElementById('matches-list');
+            container.innerHTML = '';
 
-    <!-- ================= 3. ADMIN & AUDIT PORTAL ================= -->
-    <section id="view-admin" class="hidden space-y-6">
-      <!-- Metric Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-lg flex items-center justify-between">
-          <div>
-            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Matched Allocations</p>
-            <h3 id="statMatched" class="text-3xl font-black text-emerald-400 mt-1">0</h3>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-circle-check"></i>
-          </div>
-        </div>
+            // Compute and Sort Matches
+            const matches = ngoNeeds.map(ngo => {
+                const res = computeUtilityScore(donor, ngo);
+                return { ...ngo, score: res.score, distance: res.distance };
+            }).sort((a, b) => b.score - a.score);
 
-        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-lg flex items-center justify-between">
-          <div>
-            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Diverted to Recycler</p>
-            <h3 id="statRecycled" class="text-3xl font-black text-amber-400 mt-1">0</h3>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-recycle"></i>
-          </div>
-        </div>
+            matches.forEach(match => {
+                const urgencyBadge = match.urgency === 'Critical' ? 'bg-red-100 text-red-700' :
+                                     match.urgency === 'High' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700';
 
-        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800 shadow-lg flex items-center justify-between">
-          <div>
-            <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Logistics Optimization</p>
-            <h3 class="text-3xl font-black text-indigo-400 mt-1">98.2%</h3>
-          </div>
-          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl">
-            <i class="fa-solid fa-truck-fast"></i>
-          </div>
-        </div>
-      </div>
+                const card = document.createElement('div');
+                card.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-blue-400 transition";
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-slate-900">${match.name}</h3>
+                            <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold ${urgencyBadge}">${match.urgency} Urgency</span>
+                        </div>
+                        <p class="text-sm text-slate-600">Needs: <span class="font-semibold text-slate-800">${match.qty}x ${match.type} (${match.size})</span></p>
+                        <p class="text-xs text-slate-400 flex items-center gap-1">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${match.distance} km away from your location
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+                        <div class="text-right">
+                            <span class="text-2xl font-black text-blue-600">${match.score}%</span>
+                            <span class="block text-xs text-slate-400">Match Score</span>
+                        </div>
+                        <button onclick="confirmDispatch('${match.name}', '${donor.type}')" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg font-medium shadow-sm transition">
+                            Dispatch
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
 
-      <!-- Audit Table -->
-      <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 shadow-xl">
-        <h2 class="text-base font-bold text-slate-200 mb-4 flex items-center gap-2">
-          <i class="fa-solid fa-receipt text-emerald-400"></i> Platform Audit & Redistribution Trail
-        </h2>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-xs text-slate-300">
-            <thead class="bg-slate-950 uppercase border-b border-slate-800 text-slate-400 font-semibold">
-              <tr>
-                <th class="p-3">Transaction ID</th>
-                <th class="p-3">Donor</th>
-                <th class="p-3">Garment Details</th>
-                <th class="p-3">Condition</th>
-                <th class="p-3">Allocated Recipient / Route</th>
-                <th class="p-3">Status</th>
-              </tr>
-            </thead>
-            <tbody id="auditTable" class="divide-y divide-slate-800">
-              <!-- Dynamically Populated -->
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+        // Handle NGO Requirement Entry
+        function handleNgoSubmit(event) {
+            event.preventDefault();
+            const newNgo = {
+                id: 'NGO-' + Math.floor(100 + Math.random() * 900),
+                name: document.getElementById('ngo-name').value,
+                type: document.getElementById('ngo-type').value,
+                size: document.getElementById('ngo-size').value,
+                qty: parseInt(document.getElementById('ngo-qty').value),
+                urgency: document.getElementById('ngo-urgency').value,
+                lat: parseFloat(document.getElementById('ngo-lat').value),
+                lng: parseFloat(document.getElementById('ngo-lng').value)
+            };
 
-  </main>
+            ngoNeeds.push(newNgo);
+            logAudit("NGO_NEED_POSTED", `Shelter ${newNgo.name} requested ${newNgo.qty}x ${newNgo.type}`);
+            alert('Requirement successfully posted!');
+            document.getElementById('ngo-form').reset();
+            switchTab('donor');
+        }
 
-  <script>
-    // Initial NGO Demands Database
-    let ngoDemands = [
-      { id: "NGO-01", name: "St. Jude Homeless Shelter", lat: 11.370, lng: 76.790, subCategory: "Winter Coat", size: "L", genderAge: "Adult Male", qty: 20, urgency: 0.95, capRemaining: 0.8 },
-      { id: "NGO-02", name: "City Relief Center", lat: 11.450, lng: 76.820, subCategory: "Winter Coat", size: "L", genderAge: "Adult Male", qty: 15, urgency: 0.60, capRemaining: 0.5 },
-      { id: "NGO-03", name: "Child Hope Trust", lat: 11.360, lng: 76.780, subCategory: "Sweater", size: "S", genderAge: "Child", qty: 30, urgency: 0.85, capRemaining: 0.2 }
-    ];
+        // Confirm Dispatch Action
+        function confirmDispatch(ngoName, itemType) {
+            logAudit("DISPATCH_INITIATED", `Matched item [${itemType}] allocated to ${ngoName}`);
+            alert(`Dispatch order confirmed for ${ngoName}! Logistics notification sent.`);
+        }
 
-    let auditLogs = [];
+        // Log Audit System
+        function logAudit(type, details) {
+            auditLogs.unshift({
+                time: new Date().toLocaleTimeString(),
+                type: type,
+                details: details,
+                status: "VERIFIED"
+            });
+            renderAuditLogs();
+        }
 
-    // Haversine Proximity Formula
-    function getDistanceKm(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
-      return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
-    }
+        function renderAuditLogs() {
+            const tbody = document.getElementById('audit-table-body');
+            tbody.innerHTML = '';
+            auditLogs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-mono text-xs text-slate-500">${log.time}</td>
+                    <td class="p-3"><span class="font-semibold text-slate-700">${log.type}</span></td>
+                    <td class="p-3 text-slate-600">${log.details}</td>
+                    <td class="p-3"><span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded font-medium">${log.status}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    // Switch View Tabs
-    function switchTab(tab) {
-      document.querySelectorAll("section").forEach(s => s.classList.add("hidden"));
-      document.querySelectorAll(".tab-btn").forEach(b => {
-        b.classList.remove("bg-emerald-600", "text-white", "shadow-md", "shadow-emerald-600/30");
-        b.classList.add("text-slate-400");
-      });
+        // Switch View Tabs
+        function switchTab(tab) {
+            document.getElementById('view-donor').classList.add('hidden');
+            document.getElementById('view-ngo').classList.add('hidden');
+            document.getElementById('view-admin').classList.add('hidden');
 
-      document.getElementById(`view-${tab}`).classList.remove("hidden");
-      const activeBtn = document.getElementById(`tab-${tab}`);
-      activeBtn.classList.add("bg-emerald-600", "text-white", "shadow-md", "shadow-emerald-600/30");
-      activeBtn.classList.remove("text-slate-400");
+            document.getElementById('tab-donor').classList.remove('active-tab');
+            document.getElementById('tab-ngo').classList.remove('active-tab');
+            document.getElementById('tab-admin').classList.remove('active-tab');
 
-      if (tab === 'ngo') renderNgoTable();
-      if (tab === 'admin') renderAuditTable();
-    }
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+            document.getElementById(`tab-${tab}`).classList.add('active-tab');
+        }
 
-    // Donor Form Execution
-    document.getElementById("donationForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const item = {
-        id: "DON-" + Math.floor(1000 + Math.random() * 9000),
-        donor: document.getElementById("donorId").value,
-        subCategory: document.getElementById("subCategory").value,
-        size: document.getElementById("size").value,
-        genderAge: document.getElementById("genderAge").value,
-        condition: document.getElementById("condition").value,
-        lat: parseFloat(document.getElementById("lat").value),
-        lng: parseFloat(document.getElementById("lng").value)
-      };
-
-      const out = document.getElementById("output");
-
-      // Condition Guardrail (Grade C Auto Diversion)
-      if (item.condition === "Grade C") {
-        out.innerHTML = `
-          <div class="p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl mb-4 text-amber-400">
-            <div class="flex items-center gap-2 font-bold text-sm mb-1">
-              <i class="fa-solid fa-triangle-exclamation"></i> DIVERTED TO TEXTILE RECYCLER
-            </div>
-            <p class="text-xs text-slate-300">Garment condition marked as <strong>Grade C (Damaged / Torn)</strong>.</p>
-          </div>
-          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 text-xs space-y-2">
-            <p class="text-slate-300 font-semibold">Routing Path:</p>
-            <p class="text-slate-400"><i class="fa-solid fa-arrow-right text-amber-400 mr-2"></i><strong>EcoThread Recycling Hub</strong> (Local Upcycle Facility)</p>
-            <p class="text-[11px] text-slate-500 italic mt-2">Bypassing shelter allocations prevents unwanted logistics overhead and warehouse clutter.</p>
-          </div>
-        `;
-
-        auditLogs.unshift({
-          id: item.id, donor: item.donor, details: `${item.subCategory} (${item.size})`, grade: item.condition, destination: "EcoThread Recycler", status: "RECYCLED"
-        });
-        return;
-      }
-
-      // Compute Score Matrix
-      let results = ngoDemands.map(ngo => {
-        let fitScore = (ngo.subCategory === item.subCategory && ngo.size === item.size && ngo.genderAge === item.genderAge) ? 1.0 : 0.3;
-        let distKm = getDistanceKm(item.lat, item.lng, ngo.lat, ngo.lng);
-        let proxScore = Math.exp(-0.08 * distKm);
-
-        let score = (0.4 * fitScore) + (0.3 * ngo.urgency) + (0.2 * proxScore) + (0.1 * ngo.capRemaining);
-
-        return {
-          name: ngo.name,
-          score: (score * 100).toFixed(1),
-          distance: distKm.toFixed(1) + " km",
-          reason: `Fit: ${(fitScore*100).toFixed(0)}%, Dist: ${distKm.toFixed(1)}km, Urgency: ${(ngo.urgency*100).toFixed(0)}%, Space: ${(ngo.capRemaining*100).toFixed(0)}%`
+        // Initial Setup
+        window.onload = () => {
+            lucide.createIcons();
+            // Default Initial Match Calculation
+            renderMatches({
+                type: "Jackets", size: "M", qty: 10, lat: 13.0827, lng: 80.2707
+            });
+            renderAuditLogs();
         };
-      });
-
-      results.sort((a, b) => b.score - a.score);
-      let top = results[0];
-
-      out.innerHTML = `
-        <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl text-emerald-400 font-bold text-xs mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-circle-check"></i> OPTIMAL MATCH FOUND!
-        </div>
-
-        <div class="p-4 bg-slate-900 rounded-xl border border-emerald-500/40 mb-4">
-          <div class="flex justify-between items-start mb-2">
-            <span class="text-white font-bold text-sm">${top.name}</span>
-            <span class="bg-emerald-500/20 text-emerald-300 text-[10px] px-2 py-0.5 rounded-full font-bold">Top Match</span>
-          </div>
-          <div class="text-2xl font-black text-emerald-400">${top.score} <span class="text-xs font-normal text-slate-400">/ 100 score</span></div>
-          <div class="text-[11px] text-slate-400 mt-2 border-t border-slate-800 pt-2">${top.reason}</div>
-        </div>
-
-        <p class="text-slate-400 font-bold text-xs mb-2">Other NGOs Evaluated:</p>
-        <div class="space-y-2">
-          ${results.slice(1).map(r => `
-            <div class="flex justify-between items-center p-2.5 bg-slate-900 rounded-lg border border-slate-800 text-xs">
-              <span class="text-slate-300">${r.name} <span class="text-slate-500">(${r.distance})</span></span>
-              <span class="font-mono font-bold text-slate-400">${r.score} pts</span>
-            </div>
-          `).join('')}
-        </div>
-      `;
-
-      auditLogs.unshift({
-        id: item.id, donor: item.donor, details: `${item.subCategory} (${item.size})`, grade: item.condition, destination: top.name, status: "MATCHED"
-      });
-    });
-
-    // Add NGO Requirement
-    document.getElementById("ngoForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      
-      const newNgo = {
-        id: "NGO-" + Math.floor(10 + Math.random() * 90),
-        name: document.getElementById("ngoName").value,
-        lat: 11.380, lng: 76.800,
-        subCategory: document.getElementById("ngoCategory").value,
-        size: document.getElementById("ngoSize").value,
-        genderAge: document.getElementById("ngoGroup").value,
-        qty: parseInt(document.getElementById("ngoQty").value),
-        urgency: parseFloat(document.getElementById("ngoUrgency").value),
-        capRemaining: parseFloat(document.getElementById("ngoCap").value)
-      };
-
-      ngoDemands.unshift(newNgo);
-      renderNgoTable();
-      alert("NGO Demand successfully registered in system!");
-      this.reset();
-    });
-
-    // Render NGO Table
-    function renderNgoTable() {
-      const tbody = document.getElementById("ngoDemandTable");
-      tbody.innerHTML = ngoDemands.map(n => `
-        <tr class="hover:bg-slate-800/50 transition-colors">
-          <td class="p-3 font-semibold text-white">${n.name}</td>
-          <td class="p-3 text-emerald-400 font-medium">${n.subCategory}</td>
-          <td class="p-3">${n.size} (${n.genderAge})</td>
-          <td class="p-3">${n.qty} units</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 font-mono font-bold">${(n.urgency*100).toFixed(0)}%</span></td>
-          <td class="p-3">${(n.capRemaining*100).toFixed(0)}%</td>
-        </tr>
-      `).join('');
-    }
-
-    // Render Admin Audit Log
-    function renderAuditTable() {
-      const tbody = document.getElementById("auditTable");
-      tbody.innerHTML = auditLogs.map(a => `
-        <tr class="hover:bg-slate-800/50 transition-colors">
-          <td class="p-3 font-mono text-emerald-400">${a.id}</td>
-          <td class="p-3">${a.donor}</td>
-          <td class="p-3">${a.details}</td>
-          <td class="p-3">${a.grade}</td>
-          <td class="p-3 text-white font-medium">${a.destination}</td>
-          <td class="p-3"><span class="px-2 py-0.5 rounded ${a.status==='MATCHED' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20':'bg-amber-500/10 text-amber-400 border border-amber-500/20'} font-bold text-[10px]">${a.status}</span></td>
-        </tr>
-      `).join('');
-
-      document.getElementById("statMatched").innerText = auditLogs.filter(l => l.status === "MATCHED").length;
-      document.getElementById("statRecycled").innerText = auditLogs.filter(l => l.status === "RECYCLED").length;
-    }
-
-    // Init
-    renderNgoTable();
-  </script>
+    </script>
 </body>
 </html>
