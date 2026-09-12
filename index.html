@@ -34,9 +34,9 @@
         <!-- Hero Banner -->
         <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-12 text-white shadow-lg mb-8 text-center md:text-left relative overflow-hidden">
             <div class="relative z-10 max-w-2xl">
-                <h1 class="text-3xl md:text-5xl font-black mb-4 leading-tight">உங்கள் பழைய ஆடைகள், ஒருவரின் புதிய புன்னகை!</h1>
-                <p class="text-emerald-50 text-base md:text-lg mb-6">பயன்படுத்திய நல்ல ஆடைகளை அனாதை இல்லங்கள் மற்றும் தேவையுள்ள மக்களுக்குத் தந்து உதவுங்கள். உங்கள் வீட்டிற்கே வந்து பெற்றுக் கொள்கிறோம்.</p>
-                <a href="#form-section" class="bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-md hover:bg-amber-300 transition inline-block">இப்போதே தானம் செய்யுங்கள் <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                <h1 class="text-3xl md:text-5xl font-black mb-4 leading-tight">Your Old Clothes, Someone's New Smile!</h1>
+                <p class="text-emerald-50 text-base md:text-lg mb-6">Donate your gently used clothes to local orphanages and families in need. We will pick them up right from your doorstep.</p>
+                <a href="#form-section" class="bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-md hover:bg-amber-300 transition inline-block">Donate Now <i class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
             <i class="fa-solid fa-shirt absolute right-10 bottom-[-20px] text-emerald-400/20 text-[200px] hidden md:block pointer-events-none"></i>
         </div>
@@ -45,52 +45,52 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start" id="form-section">
             <!-- Donation Form -->
             <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 lg:col-span-2">
-                <h2 class="text-xl md:text-2xl font-bold mb-6 flex items-center text-slate-900"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> நன்கொடை விவரப் படிவம் (Donation Form)</h2>
+                <h2 class="text-xl md:text-2xl font-bold mb-6 flex items-center text-slate-900"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> Clothes Donation Form</h2>
                 
                 <form id="donationForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">முழு பெயர் (Full Name) *</label>
-                            <input type="text" id="donorName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="உங்கள் பெயர்">
+                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Full Name *</label>
+                            <input type="text" id="donorName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="Enter your name">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">மொபைல் எண் (Mobile No) *</label>
+                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Mobile Number *</label>
                             <input type="tel" id="donorPhone" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="98765xxxxx">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">துணிகளின் தோராயமான அளவு (Quantity) *</label>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Approximate Quantity *</label>
                         <select id="clothQuantity" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm">
-                            <option value="Small Bag (1-5 Clothes)">சிறிய பை (1-5 ஆடைகள்)</option>
-                            <option value="Medium Bag (5-15 Clothes)">நடுத்தர பை (5-15 ஆடைகள்)</option>
-                            <option value="Large Bag (15+ Clothes)">பெரிய பை (15+ ஆடைகள்)</option>
+                            <option value="Small Bag (1-5 Clothes)">Small Bag (1-5 Clothes)</option>
+                            <option value="Medium Bag (5-15 Clothes)">Medium Bag (5-15 Clothes)</option>
+                            <option value="Large Bag (15+ Clothes)">Large Bag (15+ Clothes)</option>
                         </select>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-2">துணிகளின் வகைகள் (Cloth Types)</label>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-2">Clothing Categories (Select multiple if needed)</label>
                         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             <label class="flex items-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:border-emerald-500 transition text-sm">
-                                <input type="checkbox" value="Menswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> ஆண்கள் ஆடைகள்
+                                <input type="checkbox" value="Menswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> Menswear
                             </label>
                             <label class="flex items-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:border-emerald-500 transition text-sm">
-                                <input type="checkbox" value="Womenswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> பெண்கள் ஆடைகள்
+                                <input type="checkbox" value="Womenswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> Womenswear
                             </label>
                             <label class="flex items-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:border-emerald-500 transition text-sm">
-                                <input type="checkbox" value="Kidswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> குழந்தைகள் ஆடைகள்
+                                <input type="checkbox" value="Kidswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> Kidswear
                             </label>
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">முழு முகவரி (Pickup Address) *</label>
-                        <textarea id="donorAddress" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="கதவு எண், தெரு பெயர், பகுதி மற்றும் ஊர்..."></textarea>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Full Pickup Address *</label>
+                        <textarea id="donorAddress" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="Door No, Street Name, Area and City details..."></textarea>
                     </div>
 
                     <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-md hover:bg-emerald-700 transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-paper-plane"></i>
-                        <span>கோரிக்கையை சமர்ப்பி (Submit Request)</span>
+                        <span>Submit Donation Request</span>
                     </button>
                 </form>
             </div>
@@ -100,15 +100,15 @@
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-4">
                     <div class="p-4 bg-emerald-50 rounded-xl text-emerald-600 text-2xl"><i class="fa-solid fa-truck-moving"></i></div>
                     <div>
-                        <h4 class="text-sm font-semibold text-slate-500">இலவச பிக்கப் தளம்</h4>
-                        <p class="text-xs text-slate-400">உங்களின் இருப்பிடத்திற்கே வந்து பெற்றுக்கொள்வோம்.</p>
+                        <h4 class="text-sm font-semibold text-slate-500">Free Doorstep Pickup</h4>
+                        <p class="text-xs text-slate-400">Our agents will collect donations directly from you.</p>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-4">
                     <div class="p-4 bg-amber-50 rounded-xl text-amber-600 text-2xl"><i class="fa-solid fa-shield-halved"></i></div>
                     <div>
-                        <h4 class="text-sm font-semibold text-slate-500">100% பாதுகாப்பானது</h4>
-                        <p class="text-xs text-slate-400">உரிய முறையில் சரிபார்க்கப்பட்டு தகுதியானவர்களுக்குத் தரப்படும்.</p>
+                        <h4 class="text-sm font-semibold text-slate-500">100% Verified Delivery</h4>
+                        <p class="text-xs text-slate-400">Distributed safely to verified NGOs and shelter houses.</p>
                     </div>
                 </div>
             </div>
@@ -120,10 +120,10 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
             <div>
                 <h1 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">NGO & Admin Management Panel</h1>
-                <p class="text-sm text-slate-500">பொதுமக்கள் அனுப்பிய அனைத்து நன்கொடைகளையும் இங்கே நிர்வகிக்கலாம்.</p>
+                <p class="text-sm text-slate-500">Monitor, track, and manage all public clothing donation requests live.</p>
             </div>
             <button onclick="logoutAdmin()" class="bg-rose-50 text-rose-600 border border-rose-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-100 transition shadow-sm">
-                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Logout
+                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Logout Panel
             </button>
         </div>
 
@@ -131,6 +131,6 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
                 <div>
-                    <span class="block text-xs font-semibold uppercase text-slate-400 mb-1">மொத்த கோரிக்கைகள்</span>
+                    <span class="block text-xs font-semibold uppercase text-slate-400 mb-1">Total Requests</span>
                     <span id="count-total" class="text-3xl font-black text-slate-900">0</span>
                 </div>
