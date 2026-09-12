@@ -3,407 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClothShare AI - Smart Donation Platform</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        .active-tab {
-            border-bottom: 3px solid #3b82f6;
-            color: #1d4ed8;
-            font-weight: 600;
-        }
-    </style>
+    <title>ClothAid - All-in-One Donation Portal</title>
+    <script src="https://tailwindcss.com"></script>
+    <link href="https://cloudflare.com" rel="stylesheet">
 </head>
-<body class="bg-slate-50 min-h-screen text-slate-800 font-sans flex flex-col">
+<body class="bg-slate-50 font-sans antialiased text-slate-800">
 
-    <!-- Header / Navbar -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="p-2 bg-blue-600 rounded-lg text-white">
-                    <i data-lucide="shirt" class="w-6 h-6"></i>
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="switchView('donor')">
+                    <i class="fa-solid fa-hand-holding-heart text-2xl text-amber-300"></i>
+                    <span class="font-bold text-xl tracking-wide">ClothAid</span>
                 </div>
-                <div>
-                    <h1 class="font-bold text-xl text-slate-900 tracking-tight">ClothShare AI</h1>
-                    <p class="text-xs text-slate-500">Smart Redistribution Platform</p>
+                <div class="flex space-x-3">
+                    <button onclick="switchView('donor')" id="btn-donor" class="bg-emerald-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm transition dynamic-nav bg-emerald-800 border-b-2 border-amber-300">
+                        <i class="fa-solid fa-user mr-1"></i> Donor Portal
+                    </button>
+                    <button onclick="checkAdminAccess()" id="btn-admin" class="bg-emerald-700 px-4 py-2 rounded-lg text-sm font-medium shadow-sm hover:bg-emerald-500 transition dynamic-nav">
+                        <i class="fa-solid fa-lock mr-1"></i> Admin / NGO Dashboard
+                    </button>
                 </div>
             </div>
-            
-            <!-- Navigation Tabs -->
-            <nav class="flex space-x-6 h-full">
-                <button onclick="switchTab('donor')" id="tab-donor" class="h-full px-2 flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition active-tab">
-                    <i data-lucide="package-plus" class="w-4 h-4"></i>
-                    <span>Donor Portal</span>
-                </button>
-                <button onclick="switchTab('ngo')" id="tab-ngo" class="h-full px-2 flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition">
-                    <i data-lucide="building-2" class="w-4 h-4"></i>
-                    <span>NGO Requirements</span>
-                </button>
-                <button onclick="switchTab('admin')" id="tab-admin" class="h-full px-2 flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition">
-                    <i data-lucide="shield-check" class="w-4 h-4"></i>
-                    <span>Admin Audit Log</span>
-                </button>
-            </nav>
         </div>
-    </header>
+    </nav>
 
-    <!-- Main Content Container -->
-    <main class="max-w-7xl mx-auto px-4 py-8 flex-1 w-full">
-
-        <!-- 1. DONOR PORTAL TAB -->
-        <section id="view-donor" class="space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Donation Input Form -->
-                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-fit">
-                    <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                        <i data-lucide="plus-circle" class="w-5 h-5 text-blue-600"></i> Donate Clothes
-                    </h2>
-                    <form id="donation-form" onsubmit="handleDonationSubmit(event)" class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Donor Name / Org</label>
-                            <input type="text" id="donor-name" required placeholder="e.g. Ramesh Kumar" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Clothing Type</label>
-                                <select id="donor-type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                    <option value="Jackets">Jackets / Winter</option>
-                                    <option value="Shirts">Shirts / Tops</option>
-                                    <option value="Pants">Pants / Trousers</option>
-                                    <option value="Kids Wear">Kids Wear</option>
-                                    <option value="Blankets">Blankets</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Size</label>
-                                <select id="donor-size" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                    <option value="S">Small (S)</option>
-                                    <option value="M" selected>Medium (M)</option>
-                                    <option value="L">Large (L)</option>
-                                    <option value="XL">Extra Large (XL)</option>
-                                    <option value="Kids">Kids Standard</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Quantity</label>
-                                <input type="number" id="donor-qty" min="1" value="10" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Condition</label>
-                                <select id="donor-condition" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                    <option value="New">Brand New</option>
-                                    <option value="Gently Used" selected>Gently Used</option>
-                                    <option value="Used">Used (Good)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Your Location (Lat, Long)</label>
-                            <div class="flex gap-2">
-                                <input type="text" id="donor-lat" value="13.0827" placeholder="Lat" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
-                                <input type="text" id="donor-lng" value="80.2707" placeholder="Long" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
-                            </div>
-                            <span class="text-xs text-slate-400 mt-1 block">Default set to Chennai Center</span>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm">
-                            Submit & Match NGO
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Matches Panel -->
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                            <i data-lucide="sparkles" class="w-5 h-5 text-amber-500"></i> AI Priority Recommendations
-                        </h2>
-                        <span class="text-xs bg-slate-200 text-slate-700 px-2.5 py-1 rounded-full font-medium">Utility Score Weighted</span>
-                    </div>
-
-                    <div id="matches-list" class="space-y-4">
-                        <!-- Dynamic Match Cards Rendered Here -->
-                    </div>
-                </div>
+    <!-- DONOR PORTAL VIEW -->
+    <main id="donor-view" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 dynamic-section">
+        <!-- Hero Banner -->
+        <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-12 text-white shadow-lg mb-8 text-center md:text-left relative overflow-hidden">
+            <div class="relative z-10 max-w-2xl">
+                <h1 class="text-3xl md:text-5xl font-black mb-4 leading-tight">உங்கள் பழைய ஆடைகள், ஒருவரின் புதிய புன்னகை!</h1>
+                <p class="text-emerald-50 text-base md:text-lg mb-6">பயன்படுத்திய நல்ல ஆடைகளை அனாதை இல்லங்கள் மற்றும் தேவையுள்ள மக்களுக்குத் தந்து உதவுங்கள். உங்கள் வீட்டிற்கே வந்து பெற்றுக் கொள்கிறோம்.</p>
+                <a href="#form-section" class="bg-amber-400 text-slate-900 font-bold px-6 py-3 rounded-xl shadow-md hover:bg-amber-300 transition inline-block">இப்போதே தானம் செய்யுங்கள் <i class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
-        </section>
+            <i class="fa-solid fa-shirt absolute right-10 bottom-[-20px] text-emerald-400/20 text-[200px] hidden md:block pointer-events-none"></i>
+        </div>
 
-        <!-- 2. NGO REQUIREMENTS TAB -->
-        <section id="view-ngo" class="space-y-6 hidden">
-            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm max-w-2xl mx-auto">
-                <h2 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                    <i data-lucide="building-2" class="w-5 h-5 text-blue-600"></i> Post Shelter Requirement
-                </h2>
-                <form id="ngo-form" onsubmit="handleNgoSubmit(event)" class="space-y-4">
+        <!-- Form and Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start" id="form-section">
+            <!-- Donation Form -->
+            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-100 lg:col-span-2">
+                <h2 class="text-xl md:text-2xl font-bold mb-6 flex items-center text-slate-900"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> நன்கொடை விவரப் படிவம் (Donation Form)</h2>
+                
+                <form id="donationForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">முழு பெயர் (Full Name) *</label>
+                            <input type="text" id="donorName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="உங்கள் பெயர்">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">மொபைல் எண் (Mobile No) *</label>
+                            <input type="tel" id="donorPhone" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="98765xxxxx">
+                        </div>
+                    </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Organization / Shelter Name</label>
-                        <input type="text" id="ngo-name" required placeholder="e.g. Hope Children's Home" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">துணிகளின் தோராயமான அளவு (Quantity) *</label>
+                        <select id="clothQuantity" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm">
+                            <option value="Small Bag (1-5 Clothes)">சிறிய பை (1-5 ஆடைகள்)</option>
+                            <option value="Medium Bag (5-15 Clothes)">நடுத்தர பை (5-15 ஆடைகள்)</option>
+                            <option value="Large Bag (15+ Clothes)">பெரிய பை (15+ ஆடைகள்)</option>
+                        </select>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Item Required</label>
-                            <select id="ngo-type" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                <option value="Jackets">Jackets / Winter</option>
-                                <option value="Shirts">Shirts / Tops</option>
-                                <option value="Pants">Pants / Trousers</option>
-                                <option value="Kids Wear">Kids Wear</option>
-                                <option value="Blankets">Blankets</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Required Size</label>
-                            <select id="ngo-size" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                <option value="S">Small (S)</option>
-                                <option value="M">Medium (M)</option>
-                                <option value="L">Large (L)</option>
-                                <option value="XL">Extra Large (XL)</option>
-                                <option value="Kids">Kids Standard</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Quantity Needed</label>
-                            <input type="number" id="ngo-qty" min="1" value="25" required class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-700 mb-1">Urgency Level</label>
-                            <select id="ngo-urgency" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                                <option value="Critical">Critical (Disaster/Emergency)</option>
-                                <option value="High">High (Immediate Need)</option>
-                                <option value="Medium" selected>Medium (Standard Stock)</option>
-                            </select>
-                        </div>
-                    </div>
+
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Shelter Coordinates (Lat, Long)</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="ngo-lat" value="13.0405" placeholder="Lat" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
-                            <input type="text" id="ngo-lng" value="80.2337" placeholder="Long" class="w-1/2 px-3 py-2 border rounded-lg text-sm">
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-2">துணிகளின் வகைகள் (Cloth Types)</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:border-emerald-500 transition text-sm">
+                                <input type="checkbox" value="Menswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> ஆண்கள் ஆடைகள்
+                            </label>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:border-emerald-500 transition text-sm">
+                                <input type="checkbox" value="Womenswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> பெண்கள் ஆடைகள்
+                            </label>
+                            <label class="flex items-center p-3 border border-slate-200 rounded-xl bg-slate-50 cursor-pointer hover:border-emerald-500 transition text-sm">
+                                <input type="checkbox" value="Kidswear" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 mr-2 cloth-type"> குழந்தைகள் ஆடைகள்
+                            </label>
                         </div>
                     </div>
-                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2.5 rounded-lg transition shadow-sm">
-                        Post Requirement
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">முழு முகவரி (Pickup Address) *</label>
+                        <textarea id="donorAddress" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="கதவு எண், தெரு பெயர், பகுதி மற்றும் ஊர்..."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-xl shadow-md hover:bg-emerald-700 transition flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>கோரிக்கையை சமர்ப்பி (Submit Request)</span>
                     </button>
                 </form>
             </div>
-        </section>
 
-        <!-- 3. ADMIN AUDIT LOG TAB -->
-        <section id="view-admin" class="space-y-6 hidden">
-            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
-                        <i data-lucide="history" class="w-5 h-5 text-blue-600"></i> Real-time Audit & Match History Log
-                    </h2>
-                    <span class="text-xs text-slate-500">Immutable Ledger Mock</span>
+            <!-- Stats/Info Sidebar -->
+            <div class="space-y-4 lg:col-span-1">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-4">
+                    <div class="p-4 bg-emerald-50 rounded-xl text-emerald-600 text-2xl"><i class="fa-solid fa-truck-moving"></i></div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-500">இலவச பிக்கப் தளம்</h4>
+                        <p class="text-xs text-slate-400">உங்களின் இருப்பிடத்திற்கே வந்து பெற்றுக்கொள்வோம்.</p>
+                    </div>
                 </div>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-slate-600">
-                        <thead class="bg-slate-100 text-slate-800 uppercase text-xs font-semibold">
-                            <tr>
-                                <th class="p-3">Timestamp</th>
-                                <th class="p-3">Event Type</th>
-                                <th class="p-3">Details</th>
-                                <th class="p-3">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="audit-table-body" class="divide-y divide-slate-200">
-                            <!-- Dynamic Audit Logs Rendered Here -->
-                        </tbody>
-                    </table>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center space-x-4">
+                    <div class="p-4 bg-amber-50 rounded-xl text-amber-600 text-2xl"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-500">100% பாதுகாப்பானது</h4>
+                        <p class="text-xs text-slate-400">உரிய முறையில் சரிபார்க்கப்பட்டு தகுதியானவர்களுக்குத் தரப்படும்.</p>
+                    </div>
                 </div>
             </div>
-        </section>
-
+        </div>
     </main>
 
-    <!-- Embedded Application JavaScript Logic -->
-    <script>
-        // Pre-populated NGO Needs Data
-        let ngoNeeds = [
-            { id: 'NGO-101', name: "Adayar Relief Shelter", type: "Jackets", size: "M", qty: 30, urgency: "Critical", lat: 13.0012, lng: 80.2565 },
-            { id: 'NGO-102', name: "City Orphanage Home", type: "Kids Wear", size: "Kids", qty: 50, urgency: "High", lat: 13.0878, lng: 80.2785 },
-            { id: 'NGO-103', name: "Grace Old Age Home", type: "Blankets", size: "L", qty: 20, urgency: "Medium", lat: 12.9815, lng: 80.2180 }
-        ];
+    <!-- ADMIN & NGO DASHBOARD VIEW -->
+    <main id="admin-view" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 dynamic-section hidden">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">NGO & Admin Management Panel</h1>
+                <p class="text-sm text-slate-500">பொதுமக்கள் அனுப்பிய அனைத்து நன்கொடைகளையும் இங்கே நிர்வகிக்கலாம்.</p>
+            </div>
+            <button onclick="logoutAdmin()" class="bg-rose-50 text-rose-600 border border-rose-200 px-4 py-2 rounded-xl text-xs font-bold hover:bg-rose-100 transition shadow-sm">
+                <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Logout
+            </button>
+        </div>
 
-        let auditLogs = [
-            { time: new Date().toLocaleTimeString(), type: "SYSTEM_INIT", details: "Matching engine initialized successfully.", status: "SUCCESS" }
-        ];
-
-        // Haversine Distance Formula (km)
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371; // Earth radius in km
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-                      Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-
-        // Utility Weighted Score Calculation
-        function computeUtilityScore(donor, ngo) {
-            let score = 0;
-            
-            // Item & Size Match
-            if (donor.type === ngo.type) score += 40;
-            if (donor.size === ngo.size) score += 20;
-
-            // Distance Penalty (closer is better)
-            const dist = calculateDistance(donor.lat, donor.lng, ngo.lat, ngo.lng);
-            const distScore = Math.max(0, 20 - (dist * 1.5));
-            score += distScore;
-
-            // Urgency Boost
-            if (ngo.urgency === 'Critical') score += 20;
-            else if (ngo.urgency === 'High') score += 10;
-            else score += 5;
-
-            return { score: Math.round(score), distance: dist.toFixed(1) };
-        }
-
-        // Handle Donation Form Submit & Matching
-        function handleDonationSubmit(event) {
-            event.preventDefault();
-            
-            const donor = {
-                name: document.getElementById('donor-name').value,
-                type: document.getElementById('donor-type').value,
-                size: document.getElementById('donor-size').value,
-                qty: parseInt(document.getElementById('donor-qty').value),
-                condition: document.getElementById('donor-condition').value,
-                lat: parseFloat(document.getElementById('donor-lat').value),
-                lng: parseFloat(document.getElementById('donor-lng').value)
-            };
-
-            logAudit("DONATION_OFFERED", `Donor ${donor.name} offered ${donor.qty}x ${donor.type} (${donor.size})`);
-            renderMatches(donor);
-        }
-
-        // Render AI Recommended Matches
-        function renderMatches(donor) {
-            const container = document.getElementById('matches-list');
-            container.innerHTML = '';
-
-            // Compute and Sort Matches
-            const matches = ngoNeeds.map(ngo => {
-                const res = computeUtilityScore(donor, ngo);
-                return { ...ngo, score: res.score, distance: res.distance };
-            }).sort((a, b) => b.score - a.score);
-
-            matches.forEach(match => {
-                const urgencyBadge = match.urgency === 'Critical' ? 'bg-red-100 text-red-700' :
-                                     match.urgency === 'High' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700';
-
-                const card = document.createElement('div');
-                card.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4 hover:border-blue-400 transition";
-                card.innerHTML = `
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <h3 class="font-bold text-slate-900">${match.name}</h3>
-                            <span class="text-xs px-2.5 py-0.5 rounded-full font-semibold ${urgencyBadge}">${match.urgency} Urgency</span>
-                        </div>
-                        <p class="text-sm text-slate-600">Needs: <span class="font-semibold text-slate-800">${match.qty}x ${match.type} (${match.size})</span></p>
-                        <p class="text-xs text-slate-400 flex items-center gap-1">
-                            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${match.distance} km away from your location
-                        </p>
-                    </div>
-                    <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                        <div class="text-right">
-                            <span class="text-2xl font-black text-blue-600">${match.score}%</span>
-                            <span class="block text-xs text-slate-400">Match Score</span>
-                        </div>
-                        <button onclick="confirmDispatch('${match.name}', '${donor.type}')" class="bg-blue-600 hover:bg-blue-700 text-white text-sm px-4 py-2 rounded-lg font-medium shadow-sm transition">
-                            Dispatch
-                        </button>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
-            lucide.createIcons();
-        }
-
-        // Handle NGO Requirement Entry
-        function handleNgoSubmit(event) {
-            event.preventDefault();
-            const newNgo = {
-                id: 'NGO-' + Math.floor(100 + Math.random() * 900),
-                name: document.getElementById('ngo-name').value,
-                type: document.getElementById('ngo-type').value,
-                size: document.getElementById('ngo-size').value,
-                qty: parseInt(document.getElementById('ngo-qty').value),
-                urgency: document.getElementById('ngo-urgency').value,
-                lat: parseFloat(document.getElementById('ngo-lat').value),
-                lng: parseFloat(document.getElementById('ngo-lng').value)
-            };
-
-            ngoNeeds.push(newNgo);
-            logAudit("NGO_NEED_POSTED", `Shelter ${newNgo.name} requested ${newNgo.qty}x ${newNgo.type}`);
-            alert('Requirement successfully posted!');
-            document.getElementById('ngo-form').reset();
-            switchTab('donor');
-        }
-
-        // Confirm Dispatch Action
-        function confirmDispatch(ngoName, itemType) {
-            logAudit("DISPATCH_INITIATED", `Matched item [${itemType}] allocated to ${ngoName}`);
-            alert(`Dispatch order confirmed for ${ngoName}! Logistics notification sent.`);
-        }
-
-        // Log Audit System
-        function logAudit(type, details) {
-            auditLogs.unshift({
-                time: new Date().toLocaleTimeString(),
-                type: type,
-                details: details,
-                status: "VERIFIED"
-            });
-            renderAuditLogs();
-        }
-
-        function renderAuditLogs() {
-            const tbody = document.getElementById('audit-table-body');
-            tbody.innerHTML = '';
-            auditLogs.forEach(log => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="p-3 font-mono text-xs text-slate-500">${log.time}</td>
-                    <td class="p-3"><span class="font-semibold text-slate-700">${log.type}</span></td>
-                    <td class="p-3 text-slate-600">${log.details}</td>
-                    <td class="p-3"><span class="bg-emerald-100 text-emerald-700 text-xs px-2 py-0.5 rounded font-medium">${log.status}</span></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // Switch View Tabs
-        function switchTab(tab) {
-            document.getElementById('view-donor').classList.add('hidden');
-            document.getElementById('view-ngo').classList.add('hidden');
-            document.getElementById('view-admin').classList.add('hidden');
-
-            document.getElementById('tab-donor').classList.remove('active-tab');
-            document.getElementById('tab-ngo').classList.remove('active-tab');
-            document.getElementById('tab-admin').classList.remove('active-tab');
-
-            document.getElementById(`view-${tab}`).classList.remove('hidden');
-            document.getElementById(`tab-${tab}`).classList.add('active-tab');
-        }
-
-        // Initial Setup
-        window.onload = () => {
-            lucide.createIcons();
-            // Default Initial Match Calculation
-            renderMatches({
-                type: "Jackets", size: "M", qty: 10, lat: 13.0827, lng: 80.2707
-            });
-            renderAuditLogs();
-        };
-    </script>
-</body>
-</html>
+        <!-- Dashboard Analytics Widget Counters -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
+                <div>
+                    <span class="block text-xs font-semibold uppercase text-slate-400 mb-1">மொத்த கோரிக்கைகள்</span>
+                    <span id="count-total" class="text-3xl font-black text-slate-900">0</span>
+                </div>
