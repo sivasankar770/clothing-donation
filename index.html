@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-    <title translate="no">ClothAid - All-in-One Donation Portal</title>
+    <title translate="no">ClothAid - Secure Portal</title>
     <script src="https://tailwindcss.com"></script>
     <link href="https://cloudflare.com" rel="stylesheet">
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-800 notranslate" translate="no">
 
-    <!-- NAVIGATION TABS -->
+    <!-- TOP HEADER NAVIGATION LINKS -->
     <nav class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-2 cursor-pointer" onclick="switchMainView('public')">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="goToPublicView()">
                     <i class="fa-solid fa-hand-holding-heart text-2xl text-amber-300"></i>
                     <span class="font-bold text-xl tracking-wide" translate="no">ClothAid</span>
                 </div>
-                <!-- Independent View Switchers -->
+                
                 <div class="flex space-x-2">
-                    <button onclick="switchMainView('public')" id="tab-public" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-800 border-b-2 border-amber-300">
-                        <i class="fa-solid fa-user mr-1"></i> Public Donor Form
+                    <button onclick="goToPublicView()" id="tab-public" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-800 border-b-2 border-amber-300">
+                        <i class="fa-solid fa-user mr-1"></i> Public Form
                     </button>
-                    <button onclick="switchMainView('ngo')" id="tab-ngo" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
-                        <i class="fa-solid fa-building-ngo mr-1"></i> NGO Dashboard
+                    <button onclick="triggerLoginRequest('ngo')" id="tab-ngo" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
+                        <i class="fa-solid fa-building-ngo mr-1"></i> NGO Portal
                     </button>
-                    <button onclick="switchMainView('admin')" id="tab-admin" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
+                    <button onclick="triggerLoginRequest('admin')" id="tab-admin" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
                         <i class="fa-solid fa-user-gear mr-1"></i> Admin Panel
                     </button>
                 </div>
@@ -36,15 +36,15 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- ================= PANEL 1: PUBLIC DONOR INTERFACE ================= -->
+        <!-- ================= PANEL 1: PUBLIC DONOR FORM ================= -->
         <main id="view-public" class="view-section space-y-6">
             <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-10 text-white shadow-sm">
                 <h1 class="text-2xl md:text-4xl font-black mb-2" translate="no">Your Old Clothes, Someone's New Smile!</h1>
-                <p class="text-emerald-100 text-sm max-w-xl" translate="no">Fill out the logistics form below. Local partner network operations will collect your clothes safely from your door.</p>
+                <p class="text-emerald-100 text-sm max-w-xl" translate="no">Submit the pickup logistics form block down below to dispatch free doorstep courier service agents to your home.</p>
             </div>
 
             <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/60">
-                <h2 class="text-xl font-bold mb-6 text-slate-900" translate="no"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> Submit Donation</h2>
+                <h2 class="text-xl font-bold mb-6 text-slate-900" translate="no"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> Clothes Donation Submission</h2>
                 <form id="donationForm" onsubmit="processFormSubmit(event)" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -66,35 +66,40 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Address Details *</label>
-                        <textarea id="donorAddress" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="Enter pickup address..."></textarea>
+                        <textarea id="donorAddress" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="Enter full address..."></textarea>
                     </div>
                     <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-sm hover:bg-emerald-700 transition" translate="no">
-                        <i class="fa-solid fa-paper-plane mr-1"></i> Dispatch Donation Order
+                        <i class="fa-solid fa-paper-plane mr-1"></i> Submit Donation Request
                     </button>
                 </form>
             </div>
         </main>
 
 
-        <!-- ================= PANEL 2: NGO OPERATIONS DASHBOARD ================= -->
+        <!-- ================= PANEL 2: NGO PORTAL CONTROL PANEL ================= -->
         <main id="view-ngo" class="view-section space-y-6 hidden">
-            <div>
-                <h1 class="text-2xl font-black text-slate-900" translate="no">NGO Verification Dashboard</h1>
-                <p class="text-xs text-slate-500" translate="no">Review public donor pickup operations and change request status badges dynamically.</p>
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-black text-slate-900" translate="no">NGO Operations Console</h1>
+                    <p class="text-xs text-slate-500" translate="no">Verified Partner Organization view block. Allocate active logistics status filters live.</p>
+                </div>
+                <button onclick="exitSecureSession()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-xl font-bold border border-slate-200 transition" translate="no">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Lock & Exit
+                </button>
             </div>
 
             <!-- ANALYTICS COUNTERS -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Global Logs</span><span id="ngo-total" class="text-2xl font-black">0</span></div>
+                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Total Pipeline Logs</span><span id="ngo-total" class="text-2xl font-black">0</span></div>
                     <div class="p-3 bg-blue-50 text-blue-500 rounded-xl"><i class="fa-solid fa-folder"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Pending Courier Pickups</span><span id="ngo-pending" class="text-2xl font-black text-amber-500">0</span></div>
+                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Pending Operations</span><span id="ngo-pending" class="text-2xl font-black text-amber-500">0</span></div>
                     <div class="p-3 bg-amber-50 text-amber-500 rounded-xl"><i class="fa-solid fa-clock"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Approved Distributions</span><span id="ngo-accepted" class="text-2xl font-black text-emerald-500">0</span></div>
+                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Dispatched & Accepted</span><span id="ngo-accepted" class="text-2xl font-black text-emerald-500">0</span></div>
                     <div class="p-3 bg-emerald-50 text-emerald-50 rounded-xl"><i class="fa-solid fa-check"></i></div>
                 </div>
             </div>
@@ -104,16 +109,16 @@
                     <table class="w-full text-left border-collapse text-sm">
                         <thead>
                             <tr class="bg-slate-50 border-b border-slate-100 text-slate-400 font-bold text-[11px] uppercase">
-                                <th class="py-3 px-6" translate="no">Donor</th>
-                                <th class="py-3 px-6" translate="no">Phone</th>
-                                <th class="py-3 px-6" translate="no">Quantity</th>
-                                <th class="py-3 px-6" translate="no">Pickup Address</th>
+                                <th class="py-3 px-6" translate="no">Donor Profile</th>
+                                <th class="py-3 px-6" translate="no">Contact Number</th>
+                                <th class="py-3 px-6" translate="no">Inventory Level</th>
+                                <th class="py-3 px-6" translate="no">Address Details</th>
                                 <th class="py-3 px-6" translate="no">Log Status</th>
                                 <th class="py-3 px-6 text-right" translate="no">NGO Actions</th>
                             </tr>
                         </thead>
                         <tbody id="ngoTableBody" class="divide-y divide-slate-100 text-slate-600">
-                            <!-- Injected dynamically -->
+                            <!-- Injected dynamically via script functions -->
                         </tbody>
                     </table>
                 </div>
@@ -121,16 +126,11 @@
         </main>
 
 
-        <!-- ================= PANEL 3: MASTER ADMIN PANEL ================= -->
+        <!-- ================= PANEL 3: ADMINISTRATIVE PRIVILEGE VIEW ================= -->
         <main id="view-admin" class="view-section space-y-6 hidden">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-black text-slate-900" translate="no">Master Admin Management Panel</h1>
-                    <p class="text-xs text-slate-500" translate="no">System metrics tracking log board with complete terminal record purge option capabilities.</p>
+                    <h1 class="text-2xl font-black text-slate-900" translate="no">Master Admin Management Dashboard</h1>
+                    <p class="text-xs text-slate-500" translate="no">Perform destructive modifications and pipeline log purges down inside this portal layout.</p>
                 </div>
-                <button onclick="purgeSystemData()" class="bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 font-bold px-4 py-2 rounded-xl text-xs transition" translate="no">
-                    <i class="fa-solid fa-trash-can mr-1"></i> Purge All Records
-                </button>
-            </div>
-
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60">
+                <div class="flex space-x-2">
