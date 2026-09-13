@@ -1,118 +1,3480 @@
 <!DOCTYPE html>
-<html lang="en" class="notranslate" translate="no">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
-    <title translate="no">ClothAid All-in-One Dedicated Portal Network</title>
-    <script src="https://tailwindcss.com"></script>
-    <link href="https://cloudflare.com" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ReWear Connect | Smart Clothing Donation & Redistribution</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --primary:#6c4cff;
+  --primary-dark:#5337dc;
+  --secondary:#10b981;
+  --secondary-dark:#059669;
+  --dark:#18202f;
+  --muted:#6b7280;
+  --light:#f5f7fb;
+  --white:#ffffff;
+  --danger:#ef4444;
+  --warning:#f59e0b;
+  --info:#3b82f6;
+  --border:#e2e6ee;
+  --shadow:0 12px 35px rgba(24,32,47,.10);
+  --radius:18px;
+}
+
+body{
+  font-family:Inter,Arial,sans-serif;
+  background:var(--light);
+  color:var(--dark);
+  line-height:1.6;
+  transition:.3s;
+}
+
+body.dark{
+  --dark:#f3f4f6;
+  --light:#111827;
+  --white:#1f2937;
+  --border:#374151;
+  --muted:#9ca3af;
+  --shadow:0 12px 35px rgba(0,0,0,.25);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+button,input,select,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  border:0;
+}
+
+a{
+  text-decoration:none;
+}
+
+.container{
+  width:min(1200px,92%);
+  margin:auto;
+}
+
+/* ================= NAVBAR ================= */
+
+nav{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(15px);
+  box-shadow:0 2px 15px rgba(0,0,0,.07);
+}
+
+body.dark nav{
+  background:rgba(31,41,55,.96);
+}
+
+.nav-inner{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:22px;
+  font-weight:900;
+  color:var(--primary);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+}
+
+.logo span{
+  font-size:28px;
+}
+
+.nav-links{
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+
+.nav-links a{
+  color:#374151;
+  font-weight:700;
+  font-size:14px;
+}
+
+body.dark .nav-links a{
+  color:#e5e7eb;
+}
+
+.nav-links a:hover{
+  color:var(--primary);
+}
+
+.nav-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.icon-btn{
+  width:40px;
+  height:40px;
+  border-radius:10px;
+  background:var(--light);
+  color:var(--dark);
+}
+
+.menu{
+  display:none;
+  background:none;
+  font-size:26px;
+  color:var(--dark);
+}
+
+/* ================= BUTTONS ================= */
+
+.btn{
+  padding:12px 19px;
+  border-radius:11px;
+  font-weight:800;
+  transition:.2s;
+  display:inline-block;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn-primary{
+  background:var(--primary);
+  color:white;
+  box-shadow:0 7px 20px rgba(108,76,255,.25);
+}
+
+.btn-primary:hover{
+  background:var(--primary-dark);
+}
+
+.btn-success{
+  background:var(--secondary);
+  color:white;
+}
+
+.btn-danger{
+  background:var(--danger);
+  color:white;
+}
+
+.btn-warning{
+  background:var(--warning);
+  color:white;
+}
+
+.btn-outline{
+  border:1px solid var(--border);
+  background:var(--white);
+  color:var(--dark);
+}
+
+.btn-small{
+  padding:8px 12px;
+  font-size:12px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  padding:80px 0;
+  background:
+    radial-gradient(circle at 80% 20%,rgba(108,76,255,.15),transparent 30%),
+    linear-gradient(135deg,#eeeaff,#f4fffb);
+}
+
+body.dark .hero{
+  background:
+    radial-gradient(circle at 80% 20%,rgba(108,76,255,.2),transparent 30%),
+    linear-gradient(135deg,#111827,#17251f);
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:50px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-block;
+  background:#e8e2ff;
+  color:#5636e8;
+  padding:7px 14px;
+  border-radius:30px;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.hero h1{
+  font-size:clamp(40px,5vw,67px);
+  line-height:1.04;
+  margin-bottom:20px;
+}
+
+.hero h1 span{
+  color:var(--primary);
+}
+
+.hero p{
+  font-size:18px;
+  color:var(--muted);
+  max-width:650px;
+  margin-bottom:28px;
+}
+
+.hero-buttons{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.hero-card{
+  background:var(--white);
+  padding:25px;
+  border-radius:25px;
+  box-shadow:var(--shadow);
+}
+
+.clothes{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.cloth{
+  height:145px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:65px;
+  transition:.3s;
+}
+
+.cloth:hover{
+  transform:scale(1.04) rotate(2deg);
+}
+
+.c1{background:#e9e2ff}
+.c2{background:#dff8ed}
+.c3{background:#ffe7df}
+.c4{background:#e0efff}
+
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:17px;
+}
+
+.stat{
+  background:var(--light);
+  border-radius:12px;
+  padding:12px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:20px;
+  color:var(--primary);
+}
+
+.stat small{
+  color:var(--muted);
+}
+
+/* ================= SECTIONS ================= */
+
+section{
+  padding:75px 0;
+}
+
+.section-head{
+  text-align:center;
+  margin-bottom:38px;
+}
+
+.section-head h2{
+  font-size:35px;
+  margin-bottom:8px;
+}
+
+.section-head p{
+  color:var(--muted);
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.card{
+  background:var(--white);
+  padding:27px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  transition:.3s;
+}
+
+.card:hover{
+  transform:translateY(-5px);
+}
+
+.icon{
+  font-size:38px;
+  margin-bottom:13px;
+}
+
+.card h3{
+  margin-bottom:8px;
+}
+
+.card p{
+  color:var(--muted);
+}
+
+/* ================= DASHBOARD ================= */
+
+.dashboard{
+  background:var(--white);
+}
+
+.dash-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.dash-box{
+  padding:23px;
+  border-radius:18px;
+  background:var(--light);
+  position:relative;
+  overflow:hidden;
+}
+
+.dash-box strong{
+  font-size:30px;
+  display:block;
+  color:var(--primary);
+}
+
+.dash-box span{
+  color:var(--muted);
+  font-weight:700;
+}
+
+.dash-icon{
+  position:absolute;
+  right:15px;
+  top:15px;
+  font-size:30px;
+}
+
+/* ================= IMPACT ================= */
+
+.impact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+}
+
+.impact-card{
+  background:var(--white);
+  padding:25px;
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+
+.progress{
+  height:12px;
+  background:#e5e7eb;
+  border-radius:20px;
+  overflow:hidden;
+  margin:10px 0 18px;
+}
+
+.progress-bar{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  border-radius:20px;
+  transition:1s;
+}
+
+.category-row{
+  margin-bottom:16px;
+}
+
+.category-info{
+  display:flex;
+  justify-content:space-between;
+  font-weight:800;
+  font-size:14px;
+}
+
+/* ================= FORM ================= */
+
+.form-wrap{
+  max-width:950px;
+  margin:auto;
+  background:var(--white);
+  padding:35px;
+  border-radius:25px;
+  box-shadow:var(--shadow);
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.field label{
+  font-weight:800;
+}
+
+.field input,
+.field select,
+.field textarea{
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:none;
+  background:var(--white);
+  color:var(--dark);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(108,76,255,.10);
+}
+
+.field textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.form-actions{
+  margin-top:22px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.message{
+  padding:13px;
+  border-radius:10px;
+  margin-top:15px;
+  display:none;
+  font-weight:700;
+}
+
+.success{
+  display:block;
+  background:#dcfce7;
+  color:#166534;
+}
+
+.error{
+  display:block;
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+/* ================= FILTER ================= */
+
+.toolbar{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+.search,
+.filter{
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:var(--white);
+  color:var(--dark);
+}
+
+/* ================= DONATION ================= */
+
+.donation-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.donation{
+  background:var(--white);
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:.3s;
+}
+
+.donation:hover{
+  transform:translateY(-4px);
+}
+
+.donation-top{
+  padding:20px;
+  background:linear-gradient(135deg,#f0ecff,#eafaf4);
+  font-size:55px;
+  text-align:center;
+}
+
+.donation-body{
+  padding:19px;
+}
+
+.tag{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#eeeaff;
+  color:#593de8;
+  font-size:11px;
+  font-weight:900;
+}
+
+.donation-body h3{
+  margin:9px 0 5px;
+}
+
+.meta{
+  font-size:13px;
+  color:var(--muted);
+  margin:4px 0;
+}
+
+.status{
+  margin-top:12px;
+  font-size:12px;
+  font-weight:900;
+}
+
+.status.matched{
+  color:#047857;
+}
+
+.status.pending{
+  color:#d97706;
+}
+
+.status.claimed{
+  color:#2563eb;
+}
+
+.card-actions{
+  display:flex;
+  gap:7px;
+  margin-top:15px;
+  flex-wrap:wrap;
+}
+
+.empty{
+  text-align:center;
+  padding:40px;
+  color:var(--muted);
+  grid-column:1/-1;
+}
+
+/* ================= STEPS ================= */
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.step{
+  text-align:center;
+  background:var(--white);
+  padding:27px;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+}
+
+.num{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:var(--primary);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 12px;
+  font-weight:900;
+}
+
+/* ================= NGO ================= */
+
+.ngo-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.ngo{
+  background:var(--white);
+  padding:23px;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+}
+
+.ngo-icon{
+  font-size:35px;
+}
+
+.ngo h3{
+  margin:7px 0;
+}
+
+.ngo p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+.rating{
+  color:#f59e0b;
+  margin:7px 0;
+}
+
+.ngo button{
+  margin-top:12px;
+}
+
+/* ================= REQUESTS ================= */
+
+.request-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+
+.request{
+  background:var(--white);
+  padding:22px;
+  border-radius:18px;
+  box-shadow:var(--shadow);
+  border-left:5px solid var(--primary);
+}
+
+.request h3{
+  margin-bottom:5px;
+}
+
+.request p{
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* ================= BADGES ================= */
+
+.badge-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.achievement{
+  background:var(--white);
+  padding:22px;
+  border-radius:18px;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+.achievement .emoji{
+  font-size:42px;
+  margin-bottom:8px;
+}
+
+.locked{
+  opacity:.45;
+  filter:grayscale(1);
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:2000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-box{
+  background:var(--white);
+  color:var(--dark);
+  width:min(650px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border-radius:22px;
+  padding:30px;
+  position:relative;
+}
+
+.close{
+  position:absolute;
+  right:18px;
+  top:13px;
+  background:none;
+  font-size:26px;
+  color:var(--muted);
+}
+
+/* ================= NOTIFICATION ================= */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  background:#111827;
+  color:white;
+  padding:15px 20px;
+  border-radius:12px;
+  z-index:3000;
+  transform:translateY(120px);
+  opacity:0;
+  transition:.3s;
+}
+
+.toast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  background:#171d2a;
+  color:#dbe1ea;
+  padding:40px 0;
+}
+
+.footer-inner{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+}
+
+footer p{
+  color:#9da7b7;
+}
+
+/* ================= LOGIN ================= */
+
+.login-box{
+  max-width:450px;
+  margin:auto;
+  background:var(--white);
+  padding:35px;
+  border-radius:22px;
+  box-shadow:var(--shadow);
+}
+
+.login-box h2{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.role-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin:15px 0;
+}
+
+.role{
+  padding:15px 5px;
+  border:2px solid var(--border);
+  border-radius:12px;
+  text-align:center;
+  background:var(--white);
+  color:var(--dark);
+}
+
+.role.active{
+  border-color:var(--primary);
+  background:#eeeaff;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+  overflow:auto;
+  background:var(--white);
+  border-radius:18px;
+  box-shadow:var(--shadow);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:750px;
+}
+
+th,td{
+  padding:14px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+}
+
+th{
+  background:var(--light);
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:950px){
+
+  .hero-grid,
+  .impact-grid{
+    grid-template-columns:1fr;
+  }
+
+  .cards,
+  .donation-grid,
+  .ngo-grid,
+  .request-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .dash-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .steps{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .badge-grid{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .toolbar{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:72px;
+    left:0;
+    right:0;
+    background:var(--white);
+    padding:20px;
+    flex-direction:column;
+  }
+
+  .nav-links.open{
+    display:flex;
+  }
+
+  .menu{
+    display:block;
+  }
+}
+
+@media(max-width:650px){
+
+  .hero{
+    padding:55px 0;
+  }
+
+  section{
+    padding:55px 0;
+  }
+
+  .form-grid,
+  .cards,
+  .donation-grid,
+  .ngo-grid,
+  .request-grid,
+  .steps,
+  .dash-grid,
+  .badge-grid,
+  .toolbar{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .hero-stats{
+    grid-template-columns:1fr;
+  }
+
+  .footer-inner{
+    flex-direction:column;
+  }
+
+  .nav-actions{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:42px;
+  }
+}
+</style>
 </head>
-<body class="bg-slate-50 font-sans antialiased text-slate-800 notranslate" translate="no">
 
-    <!-- =========================================================================
-         PORTAL STAGE 0: MAIN GATEWAY SPLASH SCREEN (LANDING SELECTION)
-         ========================================================================= -->
-    <div id="portal-gateway" class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-900 text-white relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/20 via-slate-900 to-slate-900 pointer-events-none"></div>
-        
-        <div class="text-center max-w-xl mb-12 relative z-10">
-            <div class="w-20 h-20 bg-emerald-600 rounded-3xl flex items-center justify-center text-4xl shadow-lg shadow-emerald-600/30 mx-auto mb-6">
-                <i class="fa-solid fa-hand-holding-heart text-amber-300"></i>
-            </div>
-            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-3" translate="no">Welcome to ClothAid</h1>
-            <p class="text-slate-400 text-sm md:text-base" translate="no">Please select your dedicated access gateway to open the targeted network system portal environment.</p>
-        </div>
+<body>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full relative z-10">
-            <!-- Customer Card Gateway -->
-            <div onclick="navigateToView('customer')" class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl cursor-pointer hover:border-emerald-500 hover:bg-slate-800 transition group flex flex-col justify-between h-48 shadow-lg shadow-black/20">
-                <div>
-                    <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center text-lg group-hover:bg-emerald-500 group-hover:text-white transition"><i class="fa-solid fa-user"></i></div>
-                    <h3 class="text-lg font-bold mt-4" translate="no">Customer Donor</h3>
-                    <p class="text-slate-400 text-xs mt-1" translate="no">Schedule doorstep pick-ups and donate clothes to local networks.</p>
-                </div>
-                <span class="text-xs text-emerald-400 font-bold group-hover:translate-x-1 transition flex items-center mt-4">Open Portal <i class="fa-solid fa-arrow-right ml-1"></i></span>
-            </div>
+<!-- ================= NAVBAR ================= -->
 
-            <!-- NGO Card Gateway -->
-            <div onclick="openPortalAuthenticationGate('ngo')" class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-slate-800 transition group flex flex-col justify-between h-48 shadow-lg shadow-black/20">
-                <div>
-                    <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center text-lg group-hover:bg-blue-500 group-hover:text-white transition"><i class="fa-solid fa-building-ngo"></i></div>
-                    <h3 class="text-lg font-bold mt-4" translate="no">NGO Organization</h3>
-                    <p class="text-slate-400 text-xs mt-1" translate="no">Review public logistical requests and modify execution logs.</p>
-                </div>
-                <span class="text-xs text-blue-400 font-bold group-hover:translate-x-1 transition flex items-center mt-4">Authorized Login <i class="fa-solid fa-arrow-right ml-1"></i></span>
-            </div>
+<nav>
+<div class="container nav-inner">
 
-            <!-- Admin Card Gateway -->
-            <div onclick="openPortalAuthenticationGate('admin')" class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl cursor-pointer hover:border-rose-500 hover:bg-slate-800 transition group flex flex-col justify-between h-48 shadow-lg shadow-black/20">
-                <div>
-                    <div class="w-10 h-10 bg-rose-500/10 text-rose-400 rounded-xl flex items-center justify-center text-lg group-hover:bg-rose-500 group-hover:text-white transition"><i class="fa-solid fa-user-gear"></i></div>
-                    <h3 class="text-lg font-bold mt-4" translate="no">System Administrator</h3>
-                    <p class="text-slate-400 text-xs mt-1" translate="no">Global terminal data maintenance and record lifecycle modifications.</p>
-                </div>
-                <span class="text-xs text-rose-400 font-bold group-hover:translate-x-1 transition flex items-center mt-4">Secure Terminal <i class="fa-solid fa-arrow-right ml-1"></i></span>
-            </div>
-        </div>
-    </div>
+  <div class="logo">
+    <span>♻️</span>
+    ReWear Connect
+  </div>
 
-    <!-- =========================================================================
-         SECURE ROUTER AUTHENTICATION LOGIN OVERLAY VIEW
-         ========================================================================= -->
-    <div id="portal-login-gate" class="min-h-screen flex items-center justify-center p-6 bg-slate-900 hidden relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-slate-900 pointer-events-none"></div>
-        <div class="bg-slate-800 border border-slate-700/60 rounded-2xl max-w-md w-full p-8 shadow-2xl relative z-10 text-white">
-            <button onclick="returnToMainGateway()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-200 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div id="authGateIcon" class="w-12 h-12 bg-slate-700/50 rounded-xl flex items-center justify-center text-xl mb-4"></div>
-            <h3 id="authGateTitle" class="text-xl font-bold mb-1" translate="no">Secure Portal Login</h3>
-            <p id="authGateDesc" class="text-slate-400 text-xs mb-6" translate="no">Enter valid authentication keys to clear security boundaries.</p>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1" translate="no">Security Passcode</label>
-                    <input type="password" id="authGatePasscodeField" class="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900/50 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm" placeholder="Enter portal password">
-                </div>
-                <div id="authGateErrorMessage" class="text-rose-400 text-xs hidden font-semibold" translate="no">
-                    <i class="fa-solid fa-circle-exclamation mr-1"></i> Access denied. Invalid verification token.
-                </div>
-                <button onclick="evaluatePortalCredentials()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition" translate="no">
-                    Verify and Unlock Workspace
-                </button>
-            </div>
-        </div>
-    </div>
+  <button class="menu" onclick="toggleMenu()">☰</button>
+
+  <div class="nav-links" id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#donate">Donate</a>
+    <a href="#discover">Discover</a>
+    <a href="#requests">Requests</a>
+    <a href="#ngos">NGOs</a>
+    <a href="#dashboard">Dashboard</a>
+  </div>
+
+  <div class="nav-actions">
+    <button class="icon-btn" onclick="toggleDarkMode()">🌙</button>
+    <button class="btn btn-primary btn-small" onclick="openLogin()">
+      Login
+    </button>
+  </div>
+
+</div>
+</nav>
 
 
-    <!-- =========================================================================
-         PORTAL APP 1: SEPARATE CUSTOMER DONOR APPLICATION
-         ========================================================================= -->
-    <div id="app-customer-portal" class="min-h-screen flex flex-col hidden">
-        <!-- Customer Top Navigation Header -->
-        <nav class="bg-emerald-600 text-white shadow-md">
-            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-user text-xl text-amber-300"></i>
-                    <span class="font-bold text-lg tracking-wide" translate="no">ClothAid - Donor Portal Space</span>
-                </div>
-                <button onclick="returnToMainGateway()" class="bg-emerald-700 hover:bg-emerald-800 text-xs font-bold px-4 py-2 rounded-xl border border-emerald-500 shadow-sm transition" translate="no">
-                    <i class="fa-solid fa-home mr-1"></i> Exit Workspace
-                </button>
-            </div>
-        </nav>
+<!-- ================= HERO ================= -->
 
-        <main class="max-w-4xl mx-auto w-full px-4 py-8 flex-grow space-y-6">
-            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-8 text-white shadow-sm">
-                <h1 class="text-2xl md:text-3xl font-black mb-2" translate="no">Your Old Clothes, Someone's New Smile!</h1>
-                <p class="text-emerald-50 text-xs md:text-sm" translate="no">Fill out your information completely. Verified local partner logistics operators will clear the packages at your door.</p>
-            </div>
+<header class="hero" id="home">
 
-            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/60">
-                <form id="donationSubmissionForm" onsubmit="handleFormSubmission(event)" class="space-y-5">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Full Name *</label>
-                            <input type="text" id="custName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm" placeholder="Ex: Ramesh Kumar">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Mobile Contact Number *</label>
+<div class="container hero-grid">
+
+<div>
+
+<span class="badge">
+HACKATHON PROJECT • SMART CIRCULAR FASHION
+</span>
+
+<h1>
+Give Clothes a
+<span>Second Life.</span>
+</h1>
+
+<p>
+ReWear Connect is a smart clothing donation and redistribution
+platform connecting donors, NGOs, shelters and communities.
+Donate unused clothes and help them reach someone who needs them.
+</p>
+
+<div class="hero-buttons">
+
+<a class="btn btn-primary" href="#donate">
+👕 Donate Clothes
+</a>
+
+<a class="btn btn-outline" href="#discover">
+🔎 Find Clothes
+</a>
+
+</div>
+
+</div>
+
+
+<div class="hero-card">
+
+<div class="clothes">
+
+<div class="cloth c1">👕</div>
+<div class="cloth c2">👗</div>
+<div class="cloth c3">🧥</div>
+<div class="cloth c4">👖</div>
+
+</div>
+
+<div class="hero-stats">
+
+<div class="stat">
+<strong id="heroDonations">0</strong>
+<small>Clothes Donated</small>
+</div>
+
+<div class="stat">
+<strong id="heroPeople">0</strong>
+<small>People Helped</small>
+</div>
+
+<div class="stat">
+<strong id="heroWaste">0kg</strong>
+<small>Waste Reduced</small>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</header>
+
+
+<!-- ================= WHY ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+<h2>Why ReWear Connect?</h2>
+<p>Turning unused clothes into meaningful community impact.</p>
+</div>
+
+<div class="cards">
+
+<div class="card">
+<div class="icon">🤝</div>
+<h3>Smart Redistribution</h3>
+<p>
+Match clothes with organizations based on category,
+size, condition and location.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🌱</div>
+<h3>Reduce Textile Waste</h3>
+<p>
+Extend the life of wearable clothing and reduce
+unnecessary textile waste.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📍</div>
+<h3>Local Community</h3>
+<p>
+Connect donors with nearby NGOs and community
+organizations for faster redistribution.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🚚</div>
+<h3>Pickup Support</h3>
+<p>
+Donors can request a pickup instead of travelling
+to a collection center.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📊</div>
+<h3>Impact Tracking</h3>
+<p>
+Track donated clothes, people helped and textile
+waste reduced.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🔔</div>
+<h3>Live Notifications</h3>
+<p>
+Get updates when donations are matched, claimed
+or redistributed.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="dashboard" id="dashboard">
+
+<div class="container">
+
+<div class="section-head">
+<h2>📊 Impact Dashboard</h2>
+<p>Real-time statistics generated from donation activity.</p>
+</div>
+
+<div class="dash-grid">
+
+<div class="dash-box">
+<div class="dash-icon">👕</div>
+<strong id="totalDonations">0</strong>
+<span>Total Clothes</span>
+</div>
+
+<div class="dash-box">
+<div class="dash-icon">🤝</div>
+<strong id="matchedDonations">0</strong>
+<span>Matched Clothes</span>
+</div>
+
+<div class="dash-box">
+<div class="dash-icon">⏳</div>
+<strong id="pendingDonations">0</strong>
+<span>Pending Clothes</span>
+</div>
+
+<div class="dash-box">
+<div class="dash-icon">🌱</div>
+<strong id="totalKg">0 kg</strong>
+<span>Textile Saved</span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= IMPACT ANALYTICS ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+<h2>🌍 Environmental Impact</h2>
+<p>Every donation contributes towards a cleaner planet.</p>
+</div>
+
+<div class="impact-grid">
+
+<div class="impact-card">
+
+<h3>Donation Progress</h3>
+
+<br>
+
+<div class="category-row">
+<div class="category-info">
+<span>Clothing Reused</span>
+<span id="reusePercent">0%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="reuseBar" style="width:0%"></div>
+</div>
+</div>
+
+<div class="category-row">
+<div class="category-info">
+<span>NGO Matching</span>
+<span id="matchPercent">0%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="matchBar" style="width:0%"></div>
+</div>
+</div>
+
+<div class="category-row">
+<div class="category-info">
+<span>Community Reach</span>
+<span id="reachPercent">0%</span>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="reachBar" style="width:0%"></div>
+</div>
+</div>
+
+</div>
+
+
+<div class="impact-card">
+
+<h3>Clothing Categories</h3>
+
+<br>
+
+<div id="categoryStats"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= DONATION FORM ================= -->
+
+<section id="donate">
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>👕 Donate Your Clothes</h2>
+
+<p>
+Provide clothing details and help us find the right organization.
+</p>
+
+</div>
+
+
+<div class="form-wrap">
+
+<form id="donationForm">
+
+<div class="form-grid">
+
+<div class="field">
+
+<label>Donor Name *</label>
+
+<input
+id="donorName"
+required
+placeholder="Enter your name">
+
+</div>
+
+
+<div class="field">
+
+<label>Phone Number *</label>
+
+<input
+id="phone"
+required
+pattern="[0-9]{10}"
+placeholder="10-digit mobile number">
+
+</div>
+
+
+<div class="field">
+
+<label>Email Address</label>
+
+<input
+id="email"
+type="email"
+placeholder="example@email.com">
+
+</div>
+
+
+<div class="field">
+
+<label>Clothing Category *</label>
+
+<select id="category" required>
+
+<option value="">Select category</option>
+
+<option>Men's Clothing</option>
+<option>Women's Clothing</option>
+<option>Children's Clothing</option>
+<option>Baby Clothing</option>
+<option>Winter Wear</option>
+<option>Summer Wear</option>
+<option>School Uniform</option>
+<option>College Uniform</option>
+<option>Traditional Wear</option>
+<option>Sports Wear</option>
+<option>Formal Wear</option>
+<option>Casual Wear</option>
+<option>Footwear</option>
+<option>Bags & Accessories</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Clothing Size *</label>
+
+<select id="size" required>
+
+<option value="">Select size</option>
+
+<option>New Born</option>
+<option>0-3 Months</option>
+<option>3-6 Months</option>
+<option>6-12 Months</option>
+<option>1-2 Years</option>
+<option>3-5 Years</option>
+<option>6-10 Years</option>
+<option>XS</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+<option>XXL</option>
+<option>XXXL</option>
+<option>Mixed Sizes</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Number of Clothes *</label>
+
+<input
+id="quantity"
+type="number"
+min="1"
+max="500"
+required
+placeholder="Example: 10">
+
+</div>
+
+
+<div class="field">
+
+<label>Condition *</label>
+
+<select id="condition" required>
+
+<option value="">Select condition</option>
+<option>Brand New</option>
+<option>Like New</option>
+<option>Good</option>
+<option>Usable</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>City / Location *</label>
+
+<input
+id="location"
+required
+placeholder="Example: Chennai">
+
+</div>
+
+
+<div class="field">
+
+<label>Preferred NGO</label>
+
+<select id="ngoType">
+
+<option>Any suitable organization</option>
+<option>Children's Shelter</option>
+<option>Women's Shelter</option>
+<option>Homeless Support</option>
+<option>Community Center</option>
+<option>Old Age Home</option>
+<option>Disaster Relief</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Donation Method</label>
+
+<select id="donationMethod">
+
+<option>Drop-off</option>
+<option>Pickup Required</option>
+<option>Collection Center</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>Pickup Date</label>
+
+<input
+id="pickupDate"
+type="date">
+
+</div>
+
+
+<div class="field full">
+
+<label>Additional Description</label>
+
+<textarea
+id="description"
+placeholder="Mention special details about the clothes..."></textarea>
+
+</div>
+
+</div>
+
+
+<div class="form-actions">
+
+<button
+class="btn btn-primary"
+type="submit">
+
+♻️ Submit Donation
+
+</button>
+
+<button
+class="btn btn-outline"
+type="reset">
+
+Clear
+
+</button>
+
+</div>
+
+
+<div id="formMessage" class="message"></div>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= DISCOVER ================= -->
+
+<section id="discover">
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>🔎 Discover Available Donations</h2>
+
+<p>
+Find donated clothes according to your requirement.
+</p>
+
+</div>
+
+
+<div class="toolbar">
+
+<input
+class="search"
+id="searchInput"
+placeholder="🔎 Search category, donor or location...">
+
+
+<select
+class="filter"
+id="filterCategory">
+
+<option value="All">All Categories</option>
+
+<option>Men's Clothing</option>
+<option>Women's Clothing</option>
+<option>Children's Clothing</option>
+<option>Baby Clothing</option>
+<option>Winter Wear</option>
+<option>Summer Wear</option>
+<option>School Uniform</option>
+<option>College Uniform</option>
+<option>Traditional Wear</option>
+<option>Sports Wear</option>
+<option>Formal Wear</option>
+<option>Casual Wear</option>
+<option>Footwear</option>
+<option>Bags & Accessories</option>
+
+</select>
+
+
+<select
+class="filter"
+id="filterCondition">
+
+<option value="All">All Conditions</option>
+<option>Brand New</option>
+<option>Like New</option>
+<option>Good</option>
+<option>Usable</option>
+
+</select>
+
+
+<select
+class="filter"
+id="filterLocation">
+
+<option value="All">All Locations</option>
+<option>Chennai</option>
+<option>Coimbatore</option>
+<option>Madurai</option>
+<option>Vellore</option>
+<option>Kanchipuram</option>
+<option>Trichy</option>
+
+</select>
+
+</div>
+
+
+<div
+class="donation-grid"
+id="donationList">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= REQUESTS ================= -->
+
+<section id="requests" class="dashboard">
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>❤️ Community Clothing Requests</h2>
+
+<p>
+Organizations can request clothing based on current needs.
+</p>
+
+</div>
+
+
+<div class="request-grid">
+
+<div class="request">
+
+<h3>👶 Children's Clothes Needed</h3>
+
+<p>
+Hope Children's Home needs children's clothing
+for ages 3-10 years.
+</p>
+
+<div class="meta">
+📍 Chennai
+</div>
+
+<div class="meta">
+📦 Required: 50 clothes
+</div>
+
+<button
+class="btn btn-success btn-small"
+onclick="fulfillRequest('Children clothing')">
+
+Help This Request
+
+</button>
+
+</div>
+
+
+<div class="request">
+
+<h3>👩 Women's Clothing Needed</h3>
+
+<p>
+Women's shelter is currently accepting clean,
+usable women's clothing.
+</p>
+
+<div class="meta">
+📍 Kanchipuram
+</div>
+
+<div class="meta">
+📦 Required: 30 clothes
+</div>
+
+<button
+class="btn btn-success btn-small"
+onclick="fulfillRequest('Women clothing')">
+
+Help This Request
+
+</button>
+
+</div>
+
+
+<div class="request">
+
+<h3>🧥 Winter Wear Needed</h3>
+
+<p>
+Community center is collecting jackets and sweaters
+for vulnerable families.
+</p>
+
+<div class="meta">
+📍 Coimbatore
+</div>
+
+<div class="meta">
+📦 Required: 40 clothes
+</div>
+
+<button
+class="btn btn-success btn-small"
+onclick="fulfillRequest('Winter wear')">
+
+Help This Request
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= HOW IT WORKS ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>⚙️ How ReWear Works</h2>
+
+<p>Simple. Transparent. Community-driven.</p>
+
+</div>
+
+
+<div class="steps">
+
+<div class="step">
+<div class="num">1</div>
+<h3>Donate</h3>
+<p>Submit your unused clothing details.</p>
+</div>
+
+<div class="step">
+<div class="num">2</div>
+<h3>Verify</h3>
+<p>Donation category and condition are checked.</p>
+</div>
+
+<div class="step">
+<div class="num">3</div>
+<h3>Match</h3>
+<p>System identifies suitable NGOs.</p>
+</div>
+
+<div class="step">
+<div class="num">4</div>
+<h3>Redistribute</h3>
+<p>Clothes reach people who need them.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= NGO ================= -->
+
+<section id="ngos" class="dashboard">
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>🏢 Partner Organizations</h2>
+
+<p>
+Verified organizations participating in the redistribution network.
+</p>
+
+</div>
+
+
+<div class="ngo-grid">
+
+
+<div class="ngo">
+
+<div class="ngo-icon">🏠</div>
+
+<h3>Hope Children's Home</h3>
+
+<div class="rating">★★★★★ 4.9</div>
+
+<p>
+Supports children and accepts clean clothes,
+school uniforms and footwear.
+</p>
+
+<div class="meta">📍 Chennai</div>
+
+<div class="meta">📦 120+ families supported</div>
+
+<button
+class="btn btn-primary btn-small"
+onclick="contactNGO('Hope Children\\'s Home')">
+
+Contact NGO
+
+</button>
+
+</div>
+
+
+<div class="ngo">
+
+<div class="ngo-icon">💜</div>
+
+<h3>Care Women Foundation</h3>
+
+<div class="rating">★★★★★ 4.8</div>
+
+<p>
+Supports women and families with clothing
+and essential items.
+</p>
+
+<div class="meta">📍 Kanchipuram</div>
+
+<div class="meta">📦 90+ families supported</div>
+
+<button
+class="btn btn-primary btn-small"
+onclick="contactNGO('Care Women Foundation')">
+
+Contact NGO
+
+</button>
+
+</div>
+
+
+<div class="ngo">
+
+<div class="ngo-icon">🤲</div>
+
+<h3>Community Care Center</h3>
+
+<div class="rating">★★★★☆ 4.7</div>
+
+<p>
+Collects reusable clothing and distributes
+them to local communities.
+</p>
+
+<div class="meta">📍 Vellore</div>
+
+<div class="meta">📦 200+ people supported</div>
+
+<button
+class="btn btn-primary btn-small"
+onclick="contactNGO('Community Care Center')">
+
+Contact NGO
+
+</button>
+
+</div>
+
+
+<div class="ngo">
+
+<div class="ngo-icon">🧓</div>
+
+<h3>Golden Age Support</h3>
+
+<div class="rating">★★★★★ 4.9</div>
+
+<p>
+Provides essential clothing and care support
+for senior citizens.
+</p>
+
+<div class="meta">📍 Madurai</div>
+
+<div class="meta">📦 75+ seniors supported</div>
+
+<button
+class="btn btn-primary btn-small"
+onclick="contactNGO('Golden Age Support')">
+
+Contact NGO
+
+</button>
+
+</div>
+
+
+<div class="ngo">
+
+<div class="ngo-icon">🌍</div>
+
+<h3>Relief Community Network</h3>
+
+<div class="rating">★★★★★ 4.8</div>
+
+<p>
+Coordinates clothing distribution during
+disasters and emergency situations.
+</p>
+
+<div class="meta">📍 Coimbatore</div>
+
+<div class="meta">📦 350+ people supported</div>
+
+<button
+class="btn btn-primary btn-small"
+onclick="contactNGO('Relief Community Network')">
+
+Contact NGO
+
+</button>
+
+</div>
+
+
+<div class="ngo">
+
+<div class="ngo-icon">🎓</div>
+
+<h3>Student Support Foundation</h3>
+
+<div class="rating">★★★★☆ 4.6</div>
+
+<p>
+Provides school uniforms, bags and footwear
+to students from low-income families.
+</p>
+
+<div class="meta">📍 Trichy</div>
+
+<div class="meta">📦 180+ students supported</div>
+
+<button
+class="btn btn-primary btn-small"
+onclick="contactNGO('Student Support Foundation')">
+
+Contact NGO
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ACHIEVEMENTS ================= -->
+
+<section>
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>🏆 Donor Achievements</h2>
+
+<p>Every contribution takes you closer to a new milestone.</p>
+
+</div>
+
+
+<div class="badge-grid">
+
+<div class="achievement" id="badgeFirst">
+
+<div class="emoji">🌱</div>
+
+<h3>First Step</h3>
+
+<p>Make your first donation.</p>
+
+</div>
+
+
+<div class="achievement locked" id="badge10">
+
+<div class="emoji">👕</div>
+
+<h3>Clothing Hero</h3>
+
+<p>Donate 10+ clothes.</p>
+
+</div>
+
+
+<div class="achievement locked" id="badge50">
+
+<div class="emoji">🌳</div>
+
+<h3>Eco Champion</h3>
+
+<p>Donate 50+ clothes.</p>
+
+</div>
+
+
+<div class="achievement locked" id="badge100">
+
+<div class="emoji">🏆</div>
+
+<h3>Community Legend</h3>
+
+<p>Donate 100+ clothes.</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ADMIN ================= -->
+
+<section class="dashboard">
+
+<div class="container">
+
+<div class="section-head">
+
+<h2>🛠️ Admin Overview</h2>
+
+<p>Prototype administration panel.</p>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Donor</th>
+<th>Category</th>
+<th>Quantity</th>
+<th>Location</th>
+<th>Condition</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="adminTable">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container footer-inner">
+
+<div>
+
+<div class="logo" style="color:white">
+♻️ ReWear Connect
+</div>
+
+<p style="margin-top:8px">
+Technology for sustainable and inclusive fashion.
+</p>
+
+</div>
+
+<div>
+
+<p>
+🌱 Reuse • Redistribute • Reconnect
+</p>
+
+<p>
+Hackathon Prototype © 2026
+</p>
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ================= MODAL ================= -->
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<button class="close" onclick="closeModal()">×</button>
+
+<h2 id="modalTitle">ReWear Connect</h2>
+
+<div id="modalContent"></div>
+
+</div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div class="toast" id="toast">
+Donation updated successfully!
+</div>
+
+
+<script>
+
+/* =========================================================
+   INITIAL DONATION DATABASE
+========================================================= */
+
+const initialDonations = [
+
+{
+ id:1,
+ name:"Manoj",
+ phone:"9876543210",
+ category:"Men's Clothing",
+ size:"L",
+ qty:12,
+ condition:"Good",
+ location:"Chennai",
+ ngoType:"Homeless Support",
+ method:"Drop-off",
+ description:"Clean shirts and trousers",
+ status:"Matched"
+},
+
+{
+ id:2,
+ name:"Muthu",
+ phone:"9876543211",
+ category:"Women's Clothing",
+ size:"M",
+ qty:18,
+ condition:"Like New",
+ location:"Kanchipuram",
+ ngoType:"Women's Shelter",
+ method:"Pickup Required",
+ description:"Traditional and casual wear",
+ status:"Pending"
+},
+
+{
+ id:3,
+ name:"Siva",
+ phone:"9876543212",
+ category:"Children's Clothing",
+ size:"Mixed Sizes",
+ qty:25,
+ condition:"Usable",
+ location:"Vellore",
+ ngoType:"Children's Shelter",
+ method:"Collection Center",
+ description:"Children's clothes",
+ status:"Matched"
+},
+
+{
+ id:4,
+ name:"Sivaguru",
+ phone:"9876543213",
+ category:"School Uniform",
+ size:"M",
+ qty:20,
+ condition:"Good",
+ location:"Chennai",
+ ngoType:"Community Center",
+ method:"Drop-off",
+ description:"School uniforms",
+ status:"Matched"
+},
+
+{
+ id:5,
+ name:"Rahul",
+ phone:"9876543214",
+ category:"Winter Wear",
+ size:"XL",
+ qty:8,
+ condition:"Like New",
+ location:"Coimbatore",
+ ngoType:"Homeless Support",
+ method:"Pickup Required",
+ description:"Jackets and sweaters",
+ status:"Pending"
+},
+
+{
+ id:6,
+ name:"Meena",
+ phone:"9876543215",
+ category:"Traditional Wear",
+ size:"S",
+ qty:14,
+ condition:"Good",
+ location:"Madurai",
+ ngoType:"Women's Shelter",
+ method:"Drop-off",
+ description:"Traditional clothes",
+ status:"Pending"
+},
+
+{
+ id:7,
+ name:"Sanjay",
+ phone:"9876543216",
+ category:"Baby Clothing",
+ size:"6-12 Months",
+ qty:16,
+ condition:"Like New",
+ location:"Trichy",
+ ngoType:"Children's Shelter",
+ method:"Drop-off",
+ description:"Baby clothes",
+ status:"Matched"
+},
+
+{
+ id:8,
+ name:"Lakshmi",
+ phone:"9876543217",
+ category:"Sports Wear",
+ size:"M",
+ qty:10,
+ condition:"Good",
+ location:"Chennai",
+ ngoType:"Community Center",
+ method:"Collection Center",
+ description:"Sports T-shirts and shorts",
+ status:"Pending"
+}
+
+];
+
+
+/* =========================================================
+   CATEGORY EMOJI
+========================================================= */
+
+const categoryEmoji = {
+
+"Men's Clothing":"👕",
+"Women's Clothing":"👗",
+"Children's Clothing":"🧒",
+"Baby Clothing":"🍼",
+"Winter Wear":"🧥",
+"Summer Wear":"☀️",
+"School Uniform":"🎒",
+"College Uniform":"🎓",
+"Traditional Wear":"🥻",
+"Sports Wear":"⚽",
+"Formal Wear":"👔",
+"Casual Wear":"👚",
+"Footwear":"👟",
+"Bags & Accessories":"👜"
+
+};
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+let donations =
+JSON.parse(localStorage.getItem("rewearDonationsV2"))
+|| initialDonations;
+
+
+/* =========================================================
+   SAVE DATA
+========================================================= */
+
+function saveData(){
+
+localStorage.setItem(
+"rewearDonationsV2",
+JSON.stringify(donations)
+);
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value){
+
+return String(value).replace(
+/[&<>"']/g,
+
+char => ({
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[char])
+
+);
+
+}
+
+
+/* =========================================================
+   RENDER DONATIONS
+========================================================= */
+
+function renderDonations(){
+
+const list =
+document.getElementById("donationList");
+
+const search =
+document.getElementById("searchInput")
+.value
+.toLowerCase()
+.trim();
+
+const category =
+document.getElementById("filterCategory")
+.value;
+
+const condition =
+document.getElementById("filterCondition")
+.value;
+
+const location =
+document.getElementById("filterLocation")
+.value;
+
+
+const filtered =
+donations.filter(d=>{
+
+const searchMatch =
+
+d.name.toLowerCase().includes(search) ||
+
+d.category.toLowerCase().includes(search) ||
+
+d.location.toLowerCase().includes(search);
+
+
+const categoryMatch =
+category==="All" ||
+d.category===category;
+
+
+const conditionMatch =
+condition==="All" ||
+d.condition===condition;
+
+
+const locationMatch =
+location==="All" ||
+d.location===location;
+
+
+return searchMatch &&
+categoryMatch &&
+conditionMatch &&
+locationMatch;
+
+});
+
+
+if(!filtered.length){
+
+list.innerHTML = `
+<div class="empty">
+<h3>No donations found 😔</h3>
+<p>Try another category, condition or location.</p>
+</div>
+`;
+
+return;
+
+}
+
+
+list.innerHTML =
+filtered.map(d=>`
+
+<div class="donation">
+
+<div class="donation-top">
+${categoryEmoji[d.category] || "👚"}
+</div>
+
+<div class="donation-body">
+
+<span class="tag">
+${escapeHTML(d.category)}
+</span>
+
+<h3>
+${escapeHTML(d.name)}'s Donation
+</h3>
+
+<div class="meta">
+📏 Size:
+<b>${escapeHTML(d.size)}</b>
+</div>
+
+<div class="meta">
+📦 Quantity:
+<b>${d.qty}</b> clothes
+</div>
+
+<div class="meta">
+✨ Condition:
+<b>${escapeHTML(d.condition)}</b>
+</div>
+
+<div class="meta">
+📍 ${escapeHTML(d.location)}
+</div>
+
+<div class="meta">
+🚚 Method:
+${escapeHTML(d.method || "Drop-off")}
+</div>
+
+<div class="status ${
+d.status==="Matched"
+?"matched":
+d.status==="Claimed"
+?"claimed":
+"pending"
+}">
+
+${
+d.status==="Matched"
+?"✓ Matched with organization":
+d.status==="Claimed"
+?"✓ Claimed by organization":
+"● Waiting for NGO match"
+}
+
+</div>
+
+
+<div class="card-actions">
+
+${
+d.status==="Pending"
+?
+
+`<button
+class="btn btn-success btn-small"
+onclick="claimDonation(${d.id})">
+🤝 Claim
+</button>`
+
+:
+
+""
+}
+
+
+<button
+class="btn btn-outline btn-small"
+onclick="viewDonation(${d.id})">
+View
+</button>
+
+
+<button
+class="btn btn-danger btn-small"
+onclick="deleteDonation(${d.id})">
+Delete
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+const total =
+donations.reduce(
+(sum,d)=>sum + Number(d.qty),
+0
+);
+
+const matched =
+donations
+.filter(d=>d.status==="Matched" || d.status==="Claimed")
+.reduce(
+(sum,d)=>sum + Number(d.qty),
+0
+);
+
+const pending =
+total-matched;
+
+const kg =
+Math.round(total*.65);
+
+document.getElementById(
+"totalDonations"
+).textContent=total;
+
+document.getElementById(
+"matchedDonations"
+).textContent=matched;
+
+document.getElementById(
+"pendingDonations"
+).textContent=pending;
+
+document.getElementById(
+"totalKg"
+).textContent=kg+" kg";
+
+
+document.getElementById(
+"heroDonations"
+).textContent=total;
+
+document.getElementById(
+"heroPeople"
+).textContent=total*3;
+
+document.getElementById(
+"heroWaste"
+).textContent=kg+"kg";
+
+
+const matchPercent =
+total ?
+Math.round((matched/total)*100)
+:0;
+
+const reusePercent =
+total ?
+Math.min(100,Math.round((matched/total)*100)+10)
+:0;
+
+const reachPercent =
+Math.min(100,
+Math.round((total*3)/100)
+);
+
+
+document.getElementById(
+"matchPercent"
+).textContent=matchPercent+"%";
+
+document.getElementById(
+"matchBar"
+).style.width=matchPercent+"%";
+
+
+document.getElementById(
+"reusePercent"
+).textContent=reusePercent+"%";
+
+document.getElementById(
+"reuseBar"
+).style.width=reusePercent+"%";
+
+
+document.getElementById(
+"reachPercent"
+).textContent=reachPercent+"%";
+
+document.getElementById(
+"reachBar"
+).style.width=reachPercent+"%";
+
+
+updateCategoryStats();
+
+updateBadges();
+
+renderAdmin();
+
+}
+
+
+/* =========================================================
+   CATEGORY STATISTICS
+========================================================= */
+
+function updateCategoryStats(){
+
+const box =
+document.getElementById("categoryStats");
+
+const categories={};
+
+donations.forEach(d=>{
+
+categories[d.category] =
+(categories[d.category] || 0) +
+Number(d.qty);
+
+});
+
+
+const sorted =
+Object.entries(categories)
+.sort((a,b)=>b[1]-a[1])
+.slice(0,7);
+
+
+const max =
+sorted.length
+? sorted[0][1]
+:1;
+
+
+box.innerHTML =
+sorted.map(([cat,count])=>{
+
+const percent =
+Math.round((count/max)*100);
+
+return `
+
+<div class="category-row">
+
+<div class="category-info">
+
+<span>
+${categoryEmoji[cat] || "👚"}
+${escapeHTML(cat)}
+</span>
+
+<span>${count}</span>
+
+</div>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+style="width:${percent}%">
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* =========================================================
+   DONATION SUBMIT
+========================================================= */
+
+document
+.getElementById("donationForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+
+const donation={
+
+id:Date.now(),
+
+name:
+document.getElementById("donorName")
+.value.trim(),
+
+phone:
+document.getElementById("phone")
+.value.trim(),
+
+email:
+document.getElementById("email")
+.value.trim(),
+
+category:
+document.getElementById("category")
+.value,
+
+size:
+document.getElementById("size")
+.value,
+
+qty:
+Number(
+document.getElementById("quantity")
+.value
+),
+
+condition:
+document.getElementById("condition")
+.value,
+
+location:
+document.getElementById("location")
+.value.trim(),
+
+ngoType:
+document.getElementById("ngoType")
+.value,
+
+method:
+document.getElementById("donationMethod")
+.value,
+
+pickupDate:
+document.getElementById("pickupDate")
+.value,
+
+description:
+document.getElementById("description")
+.value.trim(),
+
+status:"Pending",
+
+createdAt:
+new Date().toISOString()
+
+};
+
+
+donations.unshift(donation);
+
+saveData();
+
+renderDonations();
+
+updateDashboard();
+
+
+const msg =
+document.getElementById("formMessage");
+
+msg.textContent =
+"✅ Donation submitted successfully! Your donation is now waiting for an NGO match.";
+
+msg.className="message success";
+
+
+showToast(
+"🎉 Donation submitted successfully!"
+);
+
+
+this.reset();
+
+
+setTimeout(()=>{
+
+document
+.getElementById("discover")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+},500);
+
+});
+
+
+/* =========================================================
+   SEARCH / FILTER
+========================================================= */
+
+document
+.getElementById("searchInput")
+.addEventListener("input",renderDonations);
+
+document
+.getElementById("filterCategory")
+.addEventListener("change",renderDonations);
+
+document
+.getElementById("filterCondition")
+.addEventListener("change",renderDonations);
+
+document
+.getElementById("filterLocation")
+.addEventListener("change",renderDonations);
+
+
+/* =========================================================
+   CLAIM DONATION
+========================================================= */
+
+function claimDonation(id){
+
+const donation =
+donations.find(d=>d.id===id);
+
+if(!donation)return;
+
+
+donation.status="Claimed";
+
+saveData();
+
+renderDonations();
+
+updateDashboard();
+
+showToast(
+"🤝 Donation successfully claimed!"
+);
+
+}
+
+
+/* =========================================================
+   DELETE DONATION
+========================================================= */
+
+function deleteDonation(id){
+
+if(!confirm(
+"Are you sure you want to delete this donation?"
+))return;
+
+
+donations =
+donations.filter(d=>d.id!==id);
+
+saveData();
+
+renderDonations();
+
+updateDashboard();
+
+showToast(
+"🗑️ Donation deleted."
+);
+
+}
+
+
+/* =========================================================
+   VIEW DONATION
+========================================================= */
+
+function viewDonation(id){
+
+const d =
+donations.find(x=>x.id===id);
+
+if(!d)return;
+
+
+document.getElementById(
+"modalTitle"
+).textContent =
+"Donation Details";
+
+
+document.getElementById(
+"modalContent"
+).innerHTML=`
+
+<div style="margin-top:20px">
+
+<div class="donation-top">
+${categoryEmoji[d.category] || "👚"}
+</div>
+
+<br>
+
+<p><b>Donor:</b> ${escapeHTML(d.name)}</p>
+
+<p><b>Category:</b> ${escapeHTML(d.category)}</p>
+
+<p><b>Size:</b> ${escapeHTML(d.size)}</p>
+
+<p><b>Quantity:</b> ${d.qty}</p>
+
+<p><b>Condition:</b> ${escapeHTML(d.condition)}</p>
+
+<p><b>Location:</b> ${escapeHTML(d.location)}</p>
+
+<p><b>Preferred NGO:</b> ${escapeHTML(d.ngoType || "Any")}</p>
+
+<p><b>Donation Method:</b> ${escapeHTML(d.method || "Drop-off")}</p>
+
+<p><b>Status:</b> ${escapeHTML(d.status)}</p>
+
+<p><b>Description:</b>
+${escapeHTML(d.description || "No description")}
+</p>
+
+<hr style="margin:18px 0">
+
+<button
+class="btn btn-primary"
+onclick="downloadReceipt(${d.id})">
+
+🧾 Download Receipt
+
+</button>
+
+</div>
+
+`;
+
+
+openModal();
+
+}
+
+
+/* =========================================================
+   NGO CONTACT
+========================================================= */
+
+function contactNGO(name){
+
+document.getElementById(
+"modalTitle"
+).textContent=name;
+
+
+document.getElementById(
+"modalContent"
+).innerHTML=`
+
+<div style="margin-top:20px">
+
+<p style="color:var(--muted)">
+This is a demo NGO contact workflow.
+In the production version, the NGO would
+receive the donation request through the backend.
+</p>
+
+<br>
+
+<div style="
+background:var(--light);
+padding:18px;
+border-radius:12px">
+
+<strong>📞 Contact</strong>
+
+<br><br>
+
+📞 +91 98765 43210
+
+<br>
+
+📧 connect@rewear-demo.org
+
+<br>
+
+📍 Tamil Nadu, India
+
+</div>
+
+<br>
+
+<button
+class="btn btn-primary"
+onclick="showToast('📨 Request sent to NGO!');closeModal()">
+
+Send Donation Request
+
+</button>
+
+</div>
+
+`;
+
+openModal();
+
+}
+
+
+/* =========================================================
+   REQUEST
+========================================================= */
+
+function fulfillRequest(name){
+
+showToast(
+"❤️ Thank you! Your interest in helping with "+name+" has been recorded."
+);
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openModal(){
+
+document
+.getElementById("modal")
+.classList.add("active");
+
+}
+
+function closeModal(){
+
+document
+.getElementById("modal")
+.classList.remove("active");
+
+}
+
+
+window.addEventListener("click",function(e){
+
+const modal =
+document.getElementById("modal");
+
+if(e.target===modal){
+
+closeModal();
+
+}
+
+});
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode(){
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"rewearDark",
+document.body.classList.contains("dark")
+);
+
+}
+
+
+/* =========================================================
+   LOAD DARK MODE
+========================================================= */
+
+if(
+localStorage.getItem("rewearDark")==="true"
+){
+
+document.body.classList.add("dark");
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function toggleMenu(){
+
+document
+.getElementById("navLinks")
+.classList.toggle("open");
+
+}
+
+
+document
+.querySelectorAll(".nav-links a")
+.forEach(a=>{
+
+a.addEventListener("click",()=>{
+
+document
+.getElementById("navLinks")
+.classList.remove("open");
+
+});
+
+});
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(message){
+
+const toast =
+document.getElementById("toast");
+
+toast.textContent=message;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},3000);
+
+}
+
+
+/* =========================================================
+   ACHIEVEMENTS
+========================================================= */
+
+function updateBadges(){
+
+const total =
+donations.reduce(
+(sum,d)=>sum+Number(d.qty),
+0
+);
+
+
+document
+.getElementById("badgeFirst")
+.classList.remove("locked");
+
+
+if(total>=10){
+
+document
+.getElementById("badge10")
+.classList.remove("locked");
+
+}
+
+if(total>=50){
+
+document
+.getElementById("badge50")
+.classList.remove("locked");
+
+}
+
+if(total>=100){
+
+document
+.getElementById("badge100")
+.classList.remove("locked");
+
+}
+
+}
+
+
+/* =========================================================
+   ADMIN TABLE
+========================================================= */
+
+function renderAdmin(){
+
+const table =
+document.getElementById("adminTable");
+
+
+table.innerHTML =
+donations.map(d=>`
+
+<tr>
+
+<td>${escapeHTML(d.name)}</td>
+
+<td>
+${categoryEmoji[d.category] || "👚"}
+${escapeHTML(d.category)}
+</td>
+
+<td>${d.qty}</td>
+
+<td>${escapeHTML(d.location)}</td>
+
+<td>${escapeHTML(d.condition)}</td>
+
+<td>
+
+<span class="tag">
+
+${escapeHTML(d.status)}
+
+</span>
+
+</td>
+
+<td>
+
+<button
+class="btn btn-danger btn-small"
+onclick="deleteDonation(${d.id})">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+let selectedRole="Donor";
+
+
+function openLogin(){
+
+document.getElementById(
+"modalTitle"
+).textContent="Login to ReWear Connect";
+
+
+document.getElementById(
+"modalContent"
+).innerHTML=`
+
+<div class="login-box" style="
+box-shadow:none;
+padding:10px 0;
+">
+
+<div class="role-grid">
+
+<button
+class="role active"
+onclick="selectRole(this,'Donor')">
+
+👤<br>
+Donor
+
+</button>
+
+<button
+class="role"
+onclick="selectRole(this,'NGO')">
+
+🏢<br>
+NGO
+
+</button>
+
+<button
+class="role"
+onclick="selectRole(this,'Admin')">
+
+🛠️<br>
+Admin
+
+</button>
+
+</div>
+
+
+<div class="field">
+
+<label>Email</label>
+
+<input
+id="loginEmail"
+type="email"
+placeholder="demo@email.com">
+
+</div>
+
+
+<br>
+
+
+<div class="field">
+
+<label>Password</label>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="••••••••">
+
+</div>
+
+
+<br>
+
+
+<button
+class="btn btn-primary"
+style="width:100%"
+onclick="loginUser()">
+
+Login
+
+</button>
+
+
+<p style="
+text-align:center;
+margin-top:15px;
+color:var(--muted);
+font-size:13px;
+">
+
+Demo only — no real authentication.
+
+</p>
+
+</div>
+
+`;
+
+openModal();
+
+}
+
+
+function selectRole(element,role){
+
+selectedRole=role;
+
+document
+.querySelectorAll(".role")
+.forEach(r=>r.classList.remove("active"));
+
+element.classList.add("active");
+
+}
+
+
+function loginUser(){
+
+closeModal();
+
+showToast(
+"👋 Logged in as "+selectedRole
+);
+
+}
+
+
+/* =========================================================
+   RECEIPT
+========================================================= */
+
+function downloadReceipt(id){
+
+const d =
+donations.find(x=>x.id===id);
+
+if(!d)return;
+
+
+const receipt=`
+
+REWEAR CONNECT
+CLOTHING DONATION RECEIPT
+--------------------------------
+
+Donor: ${d.name}
+
+Category: ${d.category}
+
+Size: ${d.size}
+
+Quantity: ${d.qty}
+
+Condition: ${d.condition}
+
+Location: ${d.location}
+
+Donation Method: ${d.method}
+
+Status: ${d.status}
+
+--------------------------------
+
+Thank you for giving clothes
+a second life.
+
+Together we can reduce textile
+waste and support communities.
+
+`;
+
+
+const blob =
+new Blob([receipt],{
+type:"text/plain"
+});
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+const a =
+document.createElement("a");
+
+a.href=url;
+
+a.download=
+"ReWear-Donation-Receipt.txt";
+
+a.click();
+
+URL.revokeObjectURL(url);
+
+
+showToast(
+"🧾 Receipt downloaded!"
+);
+
+}
+
+
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
+renderDonations();
+
+updateDashboard();
+
+</script>
+
+</body>
+</html>
