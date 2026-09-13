@@ -4,128 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google" content="notranslate">
-    <title translate="no">ClothAid - Secure Portal</title>
+    <title translate="no">ClothAid All-in-One Dedicated Portal Network</title>
     <script src="https://tailwindcss.com"></script>
     <link href="https://cloudflare.com" rel="stylesheet">
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-800 notranslate" translate="no">
 
-    <!-- TOP HEADER NAVIGATION TABS -->
-    <nav class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-2 cursor-pointer" onclick="showPublicFormView()">
-                    <i class="fa-solid fa-hand-holding-heart text-2xl text-amber-300"></i>
-                    <span class="font-bold text-xl tracking-wide" translate="no">ClothAid</span>
+    <!-- =========================================================================
+         PORTAL STAGE 0: MAIN GATEWAY SPLASH SCREEN (LANDING SELECTION)
+         ========================================================================= -->
+    <div id="portal-gateway" class="min-h-screen flex flex-col items-center justify-center p-6 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-emerald-500/20 via-slate-900 to-slate-900 pointer-events-none"></div>
+        
+        <div class="text-center max-w-xl mb-12 relative z-10">
+            <div class="w-20 h-20 bg-emerald-600 rounded-3xl flex items-center justify-center text-4xl shadow-lg shadow-emerald-600/30 mx-auto mb-6">
+                <i class="fa-solid fa-hand-holding-heart text-amber-300"></i>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-3" translate="no">Welcome to ClothAid</h1>
+            <p class="text-slate-400 text-sm md:text-base" translate="no">Please select your dedicated access gateway to open the targeted network system portal environment.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl w-full relative z-10">
+            <!-- Customer Card Gateway -->
+            <div onclick="navigateToView('customer')" class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl cursor-pointer hover:border-emerald-500 hover:bg-slate-800 transition group flex flex-col justify-between h-48 shadow-lg shadow-black/20">
+                <div>
+                    <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 rounded-xl flex items-center justify-center text-lg group-hover:bg-emerald-500 group-hover:text-white transition"><i class="fa-solid fa-user"></i></div>
+                    <h3 class="text-lg font-bold mt-4" translate="no">Customer Donor</h3>
+                    <p class="text-slate-400 text-xs mt-1" translate="no">Schedule doorstep pick-ups and donate clothes to local networks.</p>
                 </div>
-                
-                <div class="flex space-x-2">
-                    <button onclick="showPublicFormView()" id="tab-public" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-800 border-b-2 border-amber-300">
-                        <i class="fa-solid fa-user mr-1"></i> Public Form
-                    </button>
-                    <button onclick="showLoginGateView('ngo')" id="tab-ngo" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
-                        <i class="fa-solid fa-building-ngo mr-1"></i> NGO Portal
-                    </button>
-                    <button onclick="showLoginGateView('admin')" id="tab-admin" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
-                        <i class="fa-solid fa-user-gear mr-1"></i> Admin Panel
-                    </button>
+                <span class="text-xs text-emerald-400 font-bold group-hover:translate-x-1 transition flex items-center mt-4">Open Portal <i class="fa-solid fa-arrow-right ml-1"></i></span>
+            </div>
+
+            <!-- NGO Card Gateway -->
+            <div onclick="openPortalAuthenticationGate('ngo')" class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-slate-800 transition group flex flex-col justify-between h-48 shadow-lg shadow-black/20">
+                <div>
+                    <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-xl flex items-center justify-center text-lg group-hover:bg-blue-500 group-hover:text-white transition"><i class="fa-solid fa-building-ngo"></i></div>
+                    <h3 class="text-lg font-bold mt-4" translate="no">NGO Organization</h3>
+                    <p class="text-slate-400 text-xs mt-1" translate="no">Review public logistical requests and modify execution logs.</p>
                 </div>
+                <span class="text-xs text-blue-400 font-bold group-hover:translate-x-1 transition flex items-center mt-4">Authorized Login <i class="fa-solid fa-arrow-right ml-1"></i></span>
+            </div>
+
+            <!-- Admin Card Gateway -->
+            <div onclick="openPortalAuthenticationGate('admin')" class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl cursor-pointer hover:border-rose-500 hover:bg-slate-800 transition group flex flex-col justify-between h-48 shadow-lg shadow-black/20">
+                <div>
+                    <div class="w-10 h-10 bg-rose-500/10 text-rose-400 rounded-xl flex items-center justify-center text-lg group-hover:bg-rose-500 group-hover:text-white transition"><i class="fa-solid fa-user-gear"></i></div>
+                    <h3 class="text-lg font-bold mt-4" translate="no">System Administrator</h3>
+                    <p class="text-slate-400 text-xs mt-1" translate="no">Global terminal data maintenance and record lifecycle modifications.</p>
+                </div>
+                <span class="text-xs text-rose-400 font-bold group-hover:translate-x-1 transition flex items-center mt-4">Secure Terminal <i class="fa-solid fa-arrow-right ml-1"></i></span>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- =========================================================================
+         SECURE ROUTER AUTHENTICATION LOGIN OVERLAY VIEW
+         ========================================================================= -->
+    <div id="portal-login-gate" class="min-h-screen flex items-center justify-center p-6 bg-slate-900 hidden relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-slate-900 pointer-events-none"></div>
+        <div class="bg-slate-800 border border-slate-700/60 rounded-2xl max-w-md w-full p-8 shadow-2xl relative z-10 text-white">
+            <button onclick="returnToMainGateway()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-200 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            <div id="authGateIcon" class="w-12 h-12 bg-slate-700/50 rounded-xl flex items-center justify-center text-xl mb-4"></div>
+            <h3 id="authGateTitle" class="text-xl font-bold mb-1" translate="no">Secure Portal Login</h3>
+            <p id="authGateDesc" class="text-slate-400 text-xs mb-6" translate="no">Enter valid authentication keys to clear security boundaries.</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-400 mb-1" translate="no">Security Passcode</label>
+                    <input type="password" id="authGatePasscodeField" class="w-full px-4 py-2.5 rounded-xl border border-slate-700 bg-slate-900/50 text-white focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm" placeholder="Enter portal password">
+                </div>
+                <div id="authGateErrorMessage" class="text-rose-400 text-xs hidden font-semibold" translate="no">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> Access denied. Invalid verification token.
+                </div>
+                <button onclick="evaluatePortalCredentials()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition" translate="no">
+                    Verify and Unlock Workspace
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <!-- ================= VIEW 1: PUBLIC DONOR FORM ================= -->
-        <main id="view-public" class="view-panel space-y-6">
-            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-10 text-white shadow-sm">
-                <h1 class="text-2xl md:text-4xl font-black mb-2" translate="no">Your Old Clothes, Someone's New Smile!</h1>
-                <p class="text-emerald-100 text-sm max-w-xl" translate="no">Submit the pickup logistics form block down below to dispatch free doorstep courier service agents to your home.</p>
+
+    <!-- =========================================================================
+         PORTAL APP 1: SEPARATE CUSTOMER DONOR APPLICATION
+         ========================================================================= -->
+    <div id="app-customer-portal" class="min-h-screen flex flex-col hidden">
+        <!-- Customer Top Navigation Header -->
+        <nav class="bg-emerald-600 text-white shadow-md">
+            <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user text-xl text-amber-300"></i>
+                    <span class="font-bold text-lg tracking-wide" translate="no">ClothAid - Donor Portal Space</span>
+                </div>
+                <button onclick="returnToMainGateway()" class="bg-emerald-700 hover:bg-emerald-800 text-xs font-bold px-4 py-2 rounded-xl border border-emerald-500 shadow-sm transition" translate="no">
+                    <i class="fa-solid fa-home mr-1"></i> Exit Workspace
+                </button>
+            </div>
+        </nav>
+
+        <main class="max-w-4xl mx-auto w-full px-4 py-8 flex-grow space-y-6">
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-8 text-white shadow-sm">
+                <h1 class="text-2xl md:text-3xl font-black mb-2" translate="no">Your Old Clothes, Someone's New Smile!</h1>
+                <p class="text-emerald-50 text-xs md:text-sm" translate="no">Fill out your information completely. Verified local partner logistics operators will clear the packages at your door.</p>
             </div>
 
             <div class="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200/60">
-                <h2 class="text-xl font-bold mb-6 text-slate-900" translate="no"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> Clothes Donation Submission</h2>
-                <form id="donationForm" onsubmit="processFormSubmit(event)" class="space-y-5">
+                <form id="donationSubmissionForm" onsubmit="handleFormSubmission(event)" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Full Name *</label>
-                            <input type="text" id="donorName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="Enter name">
+                            <input type="text" id="custName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm" placeholder="Ex: Ramesh Kumar">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Mobile Number *</label>
-                            <input type="tel" id="donorPhone" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="98765xxxxx">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Quantity Size *</label>
-                        <select id="clothQuantity" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm">
-                            <option value="Small Bag (1-5 Clothes)" translate="no">Small Bag (1-5 Clothes)</option>
-                            <option value="Medium Bag (5-15 Clothes)" translate="no">Medium Bag (5-15 Clothes)</option>
-                            <option value="Large Bag (15+ Clothes)" translate="no">Large Bag (15+ Clothes)</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Address Details *</label>
-                        <textarea id="donorAddress" rows="3" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50" placeholder="Enter full address..."></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-xl shadow-sm hover:bg-emerald-700 transition" translate="no">
-                        <i class="fa-solid fa-paper-plane mr-1"></i> Submit Donation Request
-                    </button>
-                </form>
-            </div>
-        </main>
-
-
-        <!-- ================= SECURE GATEWAY WORKSPACE LOGIN AREA ================= -->
-        <main id="view-login-gate" class="view-panel hidden py-12 flex justify-center">
-            <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-sm border border-slate-200/60">
-                <div id="gateIcon" class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-xl mb-4">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 id="gateTitle" class="text-xl font-bold text-slate-900 mb-1" translate="no">Secure Portal Login</h3>
-                <p id="gateDescription" class="text-slate-400 text-xs mb-6" translate="no">Enter valid authentication keys to request framework access.</p>
-                
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Security Passcode</label>
-                        <input type="password" id="gatePasscodeField" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm" placeholder="Enter password">
-                    </div>
-                    <div id="gateErrorMessage" class="text-rose-500 text-xs hidden font-semibold" translate="no">
-                        <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect passcode validation check!
-                    </div>
-                    <button onclick="validateGateCredentials()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-sm transition" translate="no">
-                        Verify and Unlock Access
-                    </button>
-                </div>
-            </div>
-        </main>
-
-
-        <!-- ================= VIEW 2: NGO OPERATIONS DASHBOARD ================= -->
-        <main id="view-ngo" class="view-panel space-y-6 hidden">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-black text-slate-900" translate="no">NGO Verification Dashboard</h1>
-                    <p class="text-xs text-slate-500" translate="no">Review public donor pickup operations and change request status badges dynamically.</p>
-                </div>
-                <button onclick="showPublicFormView()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-xl font-bold border border-slate-200 transition" translate="no">
-                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Lock & Exit
-                </button>
-            </div>
-
-            <!-- ANALYTICS COUNTERS -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Global Logs</span><span id="ngo-total" class="text-2xl font-black">0</span></div>
-                    <div class="p-3 bg-blue-50 text-blue-500 rounded-xl"><i class="fa-solid fa-folder"></i></div>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Pending Courier Pickups</span><span id="ngo-pending" class="text-2xl font-black text-amber-500">0</span></div>
-                    <div class="p-3 bg-amber-50 text-amber-500 rounded-xl"><i class="fa-solid fa-clock"></i></div>
-                </div>
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Approved Distributions</span><span id="ngo-accepted" class="text-2xl font-black text-emerald-500">0</span></div>
-                    <div class="p-3 bg-emerald-50 text-emerald-50 rounded-xl"><i class="fa-solid fa-check"></i></div>
-                </div>
-            </div>
-
+                            <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Mobile Contact Number *</label>
