@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="notranslate" translate="no">
 <head>
     <meta charset="UTF-8">
@@ -10,23 +10,23 @@
 </head>
 <body class="bg-slate-50 font-sans antialiased text-slate-800 notranslate" translate="no">
 
-    <!-- TOP HEADER NAVIGATION LINKS -->
+    <!-- TOP HEADER NAVIGATION TABS -->
     <nav class="bg-emerald-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <div class="flex items-center space-x-2 cursor-pointer" onclick="goToPublicView()">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="showPublicFormView()">
                     <i class="fa-solid fa-hand-holding-heart text-2xl text-amber-300"></i>
                     <span class="font-bold text-xl tracking-wide" translate="no">ClothAid</span>
                 </div>
                 
                 <div class="flex space-x-2">
-                    <button onclick="goToPublicView()" id="tab-public" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-800 border-b-2 border-amber-300">
+                    <button onclick="showPublicFormView()" id="tab-public" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-800 border-b-2 border-amber-300">
                         <i class="fa-solid fa-user mr-1"></i> Public Form
                     </button>
-                    <button onclick="triggerLoginRequest('ngo')" id="tab-ngo" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
+                    <button onclick="showLoginGateView('ngo')" id="tab-ngo" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
                         <i class="fa-solid fa-building-ngo mr-1"></i> NGO Portal
                     </button>
-                    <button onclick="triggerLoginRequest('admin')" id="tab-admin" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
+                    <button onclick="showLoginGateView('admin')" id="tab-admin" class="px-4 py-2 rounded-lg text-sm font-semibold shadow-sm transition nav-tab-btn bg-emerald-700 hover:bg-emerald-500">
                         <i class="fa-solid fa-user-gear mr-1"></i> Admin Panel
                     </button>
                 </div>
@@ -36,8 +36,8 @@
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- ================= PANEL 1: PUBLIC DONOR FORM ================= -->
-        <main id="view-public" class="view-section space-y-6">
+        <!-- ================= VIEW 1: PUBLIC DONOR FORM ================= -->
+        <main id="view-public" class="view-panel space-y-6">
             <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-2xl p-6 md:p-10 text-white shadow-sm">
                 <h1 class="text-2xl md:text-4xl font-black mb-2" translate="no">Your Old Clothes, Someone's New Smile!</h1>
                 <p class="text-emerald-100 text-sm max-w-xl" translate="no">Submit the pickup logistics form block down below to dispatch free doorstep courier service agents to your home.</p>
@@ -76,14 +76,39 @@
         </main>
 
 
-        <!-- ================= PANEL 2: NGO PORTAL CONTROL PANEL ================= -->
-        <main id="view-ngo" class="view-section space-y-6 hidden">
+        <!-- ================= SECURE GATEWAY WORKSPACE LOGIN AREA ================= -->
+        <main id="view-login-gate" class="view-panel hidden py-12 flex justify-center">
+            <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-sm border border-slate-200/60">
+                <div id="gateIcon" class="w-12 h-12 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h3 id="gateTitle" class="text-xl font-bold text-slate-900 mb-1" translate="no">Secure Portal Login</h3>
+                <p id="gateDescription" class="text-slate-400 text-xs mb-6" translate="no">Enter valid authentication keys to request framework access.</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1" translate="no">Security Passcode</label>
+                        <input type="password" id="gatePasscodeField" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-slate-50 text-sm" placeholder="Enter password">
+                    </div>
+                    <div id="gateErrorMessage" class="text-rose-500 text-xs hidden font-semibold" translate="no">
+                        <i class="fa-solid fa-circle-exclamation mr-1"></i> Incorrect passcode validation check!
+                    </div>
+                    <button onclick="validateGateCredentials()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-sm transition" translate="no">
+                        Verify and Unlock Access
+                    </button>
+                </div>
+            </div>
+        </main>
+
+
+        <!-- ================= VIEW 2: NGO OPERATIONS DASHBOARD ================= -->
+        <main id="view-ngo" class="view-panel space-y-6 hidden">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-black text-slate-900" translate="no">NGO Operations Console</h1>
-                    <p class="text-xs text-slate-500" translate="no">Verified Partner Organization view block. Allocate active logistics status filters live.</p>
+                    <h1 class="text-2xl font-black text-slate-900" translate="no">NGO Verification Dashboard</h1>
+                    <p class="text-xs text-slate-500" translate="no">Review public donor pickup operations and change request status badges dynamically.</p>
                 </div>
-                <button onclick="exitSecureSession()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-xl font-bold border border-slate-200 transition" translate="no">
+                <button onclick="showPublicFormView()" class="bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs px-3 py-1.5 rounded-xl font-bold border border-slate-200 transition" translate="no">
                     <i class="fa-solid fa-right-from-bracket mr-1"></i> Lock & Exit
                 </button>
             </div>
@@ -91,46 +116,16 @@
             <!-- ANALYTICS COUNTERS -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Total Pipeline Logs</span><span id="ngo-total" class="text-2xl font-black">0</span></div>
+                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Global Logs</span><span id="ngo-total" class="text-2xl font-black">0</span></div>
                     <div class="p-3 bg-blue-50 text-blue-500 rounded-xl"><i class="fa-solid fa-folder"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Pending Operations</span><span id="ngo-pending" class="text-2xl font-black text-amber-500">0</span></div>
+                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Pending Courier Pickups</span><span id="ngo-pending" class="text-2xl font-black text-amber-500">0</span></div>
                     <div class="p-3 bg-amber-50 text-amber-500 rounded-xl"><i class="fa-solid fa-clock"></i></div>
                 </div>
                 <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200/60 flex items-center justify-between">
-                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Dispatched & Accepted</span><span id="ngo-accepted" class="text-2xl font-black text-emerald-500">0</span></div>
+                    <div><span class="block text-xs font-medium text-slate-400" translate="no">Approved Distributions</span><span id="ngo-accepted" class="text-2xl font-black text-emerald-500">0</span></div>
                     <div class="p-3 bg-emerald-50 text-emerald-50 rounded-xl"><i class="fa-solid fa-check"></i></div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-sm">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-100 text-slate-400 font-bold text-[11px] uppercase">
-                                <th class="py-3 px-6" translate="no">Donor Profile</th>
-                                <th class="py-3 px-6" translate="no">Contact Number</th>
-                                <th class="py-3 px-6" translate="no">Inventory Level</th>
-                                <th class="py-3 px-6" translate="no">Address Details</th>
-                                <th class="py-3 px-6" translate="no">Log Status</th>
-                                <th class="py-3 px-6 text-right" translate="no">NGO Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ngoTableBody" class="divide-y divide-slate-100 text-slate-600">
-                            <!-- Injected dynamically via script functions -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </main>
-
-
-        <!-- ================= PANEL 3: ADMINISTRATIVE PRIVILEGE VIEW ================= -->
-        <main id="view-admin" class="view-section space-y-6 hidden">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-black text-slate-900" translate="no">Master Admin Management Dashboard</h1>
-                    <p class="text-xs text-slate-500" translate="no">Perform destructive modifications and pipeline log purges down inside this portal layout.</p>
-                </div>
-                <div class="flex space-x-2">
